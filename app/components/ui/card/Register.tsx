@@ -1,21 +1,94 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { FormEvent } from "react";
+import * as z from "zod";
+import Loader from "../Loader";
+import { useRouter } from "next/navigation";
 
 const RegisterCard = () => {
+  const router = useRouter();
+  const [validationErrors, setValidationErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const userSchema = z
+    .object({
+      username: z
+        .string()
+        .min(1, "Username is required")
+        .max(20, "maximum 20 characters only"),
+      email: z.string().min(1, "Email is required").email("Invalid email"),
+      password: z
+        .string()
+        .min(1, "Password is required")
+        .min(6, "Password must have than 6 characters"),
+      confirmPassword: z.string().min(1, "This field is required"),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      path: ["confirmPassword"],
+      message: "Passwords do not match",
+    });
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const response = await fetch(`/api/admin/auth/register`, {
-      method: "POST",
-      body: JSON.stringify({
-        username: formData.get("username"),
-        email: formData.get("email"),
-        password: formData.get("password"),
-        confirmPassword: formData.get("confirmPassword"),
-      }),
-    });
+    setError("");
+    const formData = {
+      username: e.currentTarget.username.value,
+      email: e.currentTarget.email.value,
+      password: e.currentTarget.password.value,
+      confirmPassword: e.currentTarget.confirmPassword.value,
+    };
+
+    try {
+      const validated = userSchema.parse(formData);
+      setValidationErrors({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } catch (error: any) {
+      const validationErrorMessages: Record<string, string> = {};
+      (error.errors || []).forEach((err: any) => {
+        validationErrorMessages[err.path[0]] = err.message;
+      });
+      setValidationErrors({
+        username: validationErrorMessages["username"] || "",
+        email: validationErrorMessages["email"] || "",
+        password: validationErrorMessages["password"] || "",
+        confirmPassword: validationErrorMessages["confirmPassword"] || "",
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const data = JSON.stringify(formData);
+      const response = await fetch(`/api/admin/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: data,
+      });
+      console.log(response.body);
+      if (response.ok) {
+        router.push("/admin");
+      } else {
+        const responseData = await response.json();
+        setError(responseData.message);
+      }
+      setIsLoading(false);
+    } catch (error: any) {
+      console.error("Error submitting form:", error);
+      setError("something went wrong");
+      setIsLoading(false);
+    }
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -40,6 +113,11 @@ const RegisterCard = () => {
                   name="username"
                   type="text"
                 />
+                {validationErrors.username != "" && (
+                  <p className="text-sm text-red-600">
+                    {validationErrors.username}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -53,6 +131,11 @@ const RegisterCard = () => {
                   type="email"
                   name="email"
                 />
+                {validationErrors.email != "" && (
+                  <p className="text-sm text-red-600">
+                    {validationErrors.email}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -66,6 +149,11 @@ const RegisterCard = () => {
                   type="password"
                   name="password"
                 />
+                {validationErrors.password != "" && (
+                  <p className="text-sm text-red-600">
+                    {validationErrors.password}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -79,14 +167,28 @@ const RegisterCard = () => {
                   type="password"
                   name="confirmPassword"
                 />
+                {validationErrors.confirmPassword != "" && (
+                  <p className="text-sm text-red-600">
+                    {validationErrors.confirmPassword}
+                  </p>
+                )}
               </div>
-              <button
-                className="w-full bg-blue-500 dark:bg-blue-800 hover:bg-blue-700 dark:hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 
+              <div className="w-full">
+                {isLoading ? (
+                  <Loader />
+                ) : (
+                  <button
+                    className="w-full bg-blue-500 dark:bg-blue-800 hover:bg-blue-700 dark:hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 
                 font-medium rounded-lg text-sm px-5 py-2.5 text-center  focus:ring-blue-800 dark:focus:ring-blue-300 text-white"
-                type="submit"
-              >
-                Let&apos;s start Blogging
-              </button>
+                    type="submit"
+                  >
+                    Let&apos;s start Blogging
+                  </button>
+                )}
+                {error && (
+                  <p className="text-sm text-red-500 text-center">{error}</p>
+                )}
+              </div>
             </div>
           </div>
         </div>
