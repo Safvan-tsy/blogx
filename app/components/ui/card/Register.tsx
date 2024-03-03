@@ -1,9 +1,24 @@
+"use client";
 import React from "react";
+import { FormEvent } from "react";
 
 const RegisterCard = () => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const response = await fetch(`/api/admin/auth/register`, {
+      method: "POST",
+      body: JSON.stringify({
+        username: formData.get("username"),
+        email: formData.get("email"),
+        password: formData.get("password"),
+        confirmPassword: formData.get("confirmPassword"),
+      }),
+    });
+  };
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
           <div
             className="w-full bg-white dark:bg-inherit rounded-lg shadow border border-gray-300
@@ -22,6 +37,7 @@ const RegisterCard = () => {
                   className="bg-gray-50 dark:bg-gray-950 border border-gray-300 dark:border-gray-700
                    text-gray-900 dark:text-gray-100 sm:text-sm rounded-lg block w-full p-2.5"
                   id="username"
+                  name="username"
                   type="text"
                 />
               </div>
@@ -35,6 +51,7 @@ const RegisterCard = () => {
                    text-gray-900 dark:text-gray-100 sm:text-sm rounded-lg block w-full p-2.5"
                   id="email"
                   type="email"
+                  name="email"
                 />
               </div>
               <div>
@@ -47,6 +64,7 @@ const RegisterCard = () => {
                   placeholder="••••••••"
                   id="password"
                   type="password"
+                  name="password"
                 />
               </div>
               <div>
@@ -59,6 +77,7 @@ const RegisterCard = () => {
                   placeholder="••••••••"
                   id="confirmPassword"
                   type="password"
+                  name="confirmPassword"
                 />
               </div>
               <button
