@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
   const token = req.headers.get("Authorization");
-  if(req.nextUrl.pathname.startsWith('/api/admin/login')){
+  if (req.nextUrl.pathname.startsWith("/api/admin/auth")) {
     //logic to check wheather admin account exists
-    return NextResponse.next()
+    return NextResponse.next();
   }
   if (token == null) return NextResponse.redirect(new URL("/login", req.url));
 
