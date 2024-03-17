@@ -70,10 +70,8 @@ const RegisterCard = () => {
     try {
       setIsLoading(true);
       const data = JSON.stringify(formData);
-      const key = process.env.NEXT_PUBLIC_APP_KEY;
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
-      headers.append("app-key", key || "");
 
       const response = await fetch(`/api/auth/register`, {
         method: "POST",
