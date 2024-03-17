@@ -5,7 +5,10 @@ export async function GET(req: Request) {
   try {
     const users = await db.user.findMany();
 
-    return NextResponse.json({ status: "success", users }, { status: 200 });
+    return NextResponse.json(
+      { status: "success", users: true },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json(
       {

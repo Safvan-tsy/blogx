@@ -11,13 +11,9 @@ const Login = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(`/api/user`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
         const data = await response.json();
-        setIsUser(data.users && data.users.length > 0);
+        setIsUser(data.users);
       } catch (error) {
-        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
@@ -27,7 +23,7 @@ const Login = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (

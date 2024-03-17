@@ -70,9 +70,12 @@ const RegisterCard = () => {
     try {
       setIsLoading(true);
       const data = JSON.stringify(formData);
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+
       const response = await fetch(`/api/auth/register`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: headers,
         body: data,
       });
       if (response.ok) {
