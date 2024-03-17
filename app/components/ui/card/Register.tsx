@@ -4,6 +4,7 @@ import { FormEvent } from "react";
 import * as z from "zod";
 import Loader from "../Loader";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const RegisterCard = () => {
   const router = useRouter();
@@ -69,14 +70,22 @@ const RegisterCard = () => {
     try {
       setIsLoading(true);
       const data = JSON.stringify(formData);
-      const response = await fetch(`/api/admin/auth/register`, {
+      const response = await fetch(`/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: data,
       });
-      console.log(response.body);
       if (response.ok) {
-        router.push("/admin");
+        const signInData = await signIn("credentials", {
+          username: e.currentTarget.username.value,
+          password: e.currentTarget.password.value,
+        });
+        if (signInData?.error) {
+          setError("Incorrect username or password");
+          setIsLoading(false);
+        } else {
+          router.push("/admin");
+        }
       } else {
         const responseData = await response.json();
         setError(responseData.message);
