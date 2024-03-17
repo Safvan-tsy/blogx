@@ -10,14 +10,18 @@ const Login = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/user`);
+        const key = process.env.NEXT_PUBLIC_APP_KEY;
+        const headers = new Headers();
+        headers.append("app-key", key || "");
+        const response = await fetch(`/api/user`, {
+          headers: headers,
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
         const data = await response.json();
         setIsUser(data.users && data.users.length > 0);
       } catch (error) {
-        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
@@ -27,7 +31,7 @@ const Login = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (
