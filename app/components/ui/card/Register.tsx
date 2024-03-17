@@ -84,6 +84,7 @@ const RegisterCard = () => {
           setError("Incorrect username or password");
           setIsLoading(false);
         } else {
+          router.refresh();
           router.push("/admin");
         }
       } else {
@@ -92,7 +93,6 @@ const RegisterCard = () => {
       }
       setIsLoading(false);
     } catch (error: any) {
-      console.error("Error submitting form:", error);
       setError("something went wrong");
       setIsLoading(false);
     }
