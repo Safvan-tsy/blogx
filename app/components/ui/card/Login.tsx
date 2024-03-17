@@ -62,6 +62,7 @@ const LoginCard = () => {
         setError("Incorrect username or password");
         setIsLoading(false);
       } else {
+        router.refresh();
         router.push("/admin");
       }
       setIsLoading(false);

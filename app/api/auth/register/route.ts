@@ -29,8 +29,22 @@ async function checkExistingUser(email: string, username: string) {
   else return false;
 }
 
+async function checkAnyUsers() {
+  const existingUser = await db.user.findMany();
+  if (existingUser) return true;
+  else return false;
+}
+
 export async function POST(req: Request) {
   try {
+    const anyUser = await checkAnyUsers();
+    if (anyUser)
+      return NextResponse.json(
+        {
+          message: "User Already Exists",
+        },
+        { status: 409 }
+      );
     const body = await req.json();
     const { username, email, password, confirmPassword } =
       userSchema.parse(body);
