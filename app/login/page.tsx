@@ -2,8 +2,16 @@
 import React, { useEffect, useState } from "react";
 import LoginCard from "../components/ui/card/Login";
 import RegisterCard from "../components/ui/card/Register";
+import LoadingPage from "../components/ui/LoadingPage";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const Login = () => {
+  const { data: session } = useSession();
+  if (session && session.user) {
+    const router = useRouter();
+    router.push("/admin");
+  }
   const [isUser, setIsUser] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -23,7 +31,7 @@ const Login = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingPage />;
   }
 
   return (

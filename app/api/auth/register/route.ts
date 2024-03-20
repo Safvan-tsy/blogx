@@ -31,7 +31,7 @@ async function checkExistingUser(email: string, username: string) {
 
 async function checkAnyUsers() {
   const existingUser = await db.user.findMany();
-  if (existingUser) return true;
+  if (existingUser && existingUser.length > 0) return true;
   else return false;
 }
 
