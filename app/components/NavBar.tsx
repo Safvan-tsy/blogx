@@ -1,16 +1,53 @@
 import React from "react";
 import ThemeSwitch from "./ThemeSwitch";
 import Search from "./ui/Search";
+import { FaSearch } from "react-icons/fa";
+import Link from "next/link";
 
 const NavBar = () => {
   return (
-    <div className="navbar bg-base-100 lg:px-10">
+    <div className="navbar bg-base-200 xl:px-16">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">Blogs site</a>
+        <Link href='/'> <p className="btn btn-ghost text-xl">Blogs site</p></Link>
+
       </div>
       <div className="flex-none gap-2">
-        <Search />
-        <div className="dropdown dropdown-end">
+        <div className="form-control hidden md:block">
+          <Search />
+        </div>
+        <div className="">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar"
+          >
+            <div className="w-8">
+              <ThemeSwitch />
+            </div>
+          </div>
+        </div>
+        <div className="md:hidden dropdown dropdown-end">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar"
+          >
+            <div className="w-8">
+              <FaSearch className="w-full h-full" />
+            </div>
+          </div>
+          <ul
+            tabIndex={0}
+            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-200 rounded-box w-[19rem] sm:22rem"
+          >
+            <li>
+              <div className="form-control md:hidden">
+                <Search />
+              </div>
+            </li>
+          </ul>
+        </div>
+        {/* <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
             role="button"
@@ -40,7 +77,7 @@ const NavBar = () => {
               <a>Logout</a>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );

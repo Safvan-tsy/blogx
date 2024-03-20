@@ -18,13 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProviders>
-          <NavBar />
-          <main>{children}</main>
-          <Footer />
-        </ThemeProviders>
+    <html lang="en">
+      <body className={`${inter.className} flex-col`}>
+        <NavBar />
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   );
