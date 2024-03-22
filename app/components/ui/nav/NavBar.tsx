@@ -1,13 +1,12 @@
-import React from "react";
 import ThemeSwitch from "../../ThemeSwitch";
 import Search from "../Search";
 import { FaSearch, FaSignOutAlt } from "react-icons/fa";
 import Link from "next/link";
-import { getServerSession } from "next-auth";
+import { Session, getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { GotoIcon } from "./AdminNav";
 
 const NavBar = async () => {
-  const session = await getServerSession(authOptions);
   return (
     <div className="navbar bg-base-200 xl:px-16">
       <div className="flex-1">
@@ -31,15 +30,7 @@ const NavBar = async () => {
             </div>
           </div>
         </div>
-        {session && session.user && (
-          <div className="hidden md:flex cursor-pointer">
-            <div className="tooltip tooltip-bottom" data-tip="Go to dashboard">
-              <Link href="/admin/dashboard">
-                <FaSignOutAlt className="w-6 h-6" />
-              </Link>
-            </div>
-          </div>
-        )}
+        <GotoIcon />
         <div className="md:hidden dropdown dropdown-end">
           <div
             tabIndex={0}
