@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   FaBloggerB,
   FaCubes,
@@ -11,7 +11,6 @@ import {
 } from "react-icons/fa";
 import SignOutButton from "../button/SignOutButton";
 import { useSession } from "next-auth/react";
-import { Session } from "next-auth";
 
 const AdminNav = () => {
   const pathname = usePathname();
@@ -102,14 +101,12 @@ export const GotoIcon = () => {
   const { data: session } = useSession();
 
   return (
-    <div>
+    <div className="hidden md:flex cursor-pointer">
       {session && session.user && (
-        <div className="hidden md:flex cursor-pointer">
-          <div className="tooltip tooltip-bottom" data-tip="Go to dashboard">
-            <Link href="/admin/dashboard">
-              <FaSignOutAlt className="w-6 h-6" />
-            </Link>
-          </div>
+        <div className="tooltip tooltip-bottom" data-tip="Go to dashboard">
+          <Link href="/admin/dashboard">
+            <FaSignOutAlt className="w-6 h-6" />
+          </Link>
         </div>
       )}
     </div>

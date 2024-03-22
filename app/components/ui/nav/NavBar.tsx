@@ -1,21 +1,20 @@
 import ThemeSwitch from "../../ThemeSwitch";
 import Search from "../Search";
-import { FaSearch, FaSignOutAlt } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
-import { Session, getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import { GotoIcon } from "./AdminNav";
+import Image from "next/image";
+import logo from "@/public/logo.png";
 
 const NavBar = async () => {
   return (
     <div className="navbar bg-base-200 xl:px-16">
       <div className="flex-1">
         <Link href="/">
-          {" "}
-          <p className="btn btn-ghost text-xl">Blogs site</p>
+          <Image src={logo} alt="Blogs logo" className="max-w-32 max-h-32"/>
         </Link>
       </div>
-      <div className="flex-none gap-2">
+      <div className="flex-none gap-1 md:gap-2">
         <div className="form-control hidden md:block">
           <Search />
         </div>
