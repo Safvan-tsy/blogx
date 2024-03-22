@@ -63,7 +63,7 @@ const LoginCard = () => {
         setIsLoading(false);
       } else {
         router.refresh();
-        router.push("/admin");
+        router.push("/admin/dashboard");
       }
       setIsLoading(false);
     } catch (error: any) {

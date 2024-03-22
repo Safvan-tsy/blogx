@@ -88,7 +88,7 @@ const RegisterCard = () => {
           setIsLoading(false);
         } else {
           router.refresh();
-          router.push("/admin");
+          router.push("/admin/dashboard");
         }
       } else {
         const responseData = await response.json();

@@ -1,6 +1,6 @@
 import React from "react";
-import ThemeSwitch from "./ThemeSwitch";
-import Search from "./ui/Search";
+import ThemeSwitch from "../../ThemeSwitch";
+import Search from "../Search";
 import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
 

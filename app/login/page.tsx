@@ -10,7 +10,7 @@ const Login = () => {
   const { data: session } = useSession();
   if (session && session.user) {
     const router = useRouter();
-    router.push("/admin");
+    router.push("/admin/dashboard");
   }
   const [isUser, setIsUser] = useState(false);
   const [loading, setLoading] = useState(true);
