@@ -8,10 +8,8 @@ import { useSession } from "next-auth/react";
 
 const Login = () => {
   const { data: session } = useSession();
-  if (session && session.user) {
-    const router = useRouter();
-    router.push("/admin/dashboard");
-  }
+  const router = useRouter();
+
   const [isUser, setIsUser] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -26,9 +24,12 @@ const Login = () => {
         setLoading(false);
       }
     };
-
-    fetchData();
-  }, []);
+    if (session && session.user) {
+      router.push("/admin/dashboard");
+    } else {
+      fetchData();
+    }
+  }, [session, router]);
 
   if (loading) {
     return <LoadingPage />;

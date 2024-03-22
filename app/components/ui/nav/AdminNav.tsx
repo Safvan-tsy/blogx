@@ -2,7 +2,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { FaBloggerB, FaCubes, FaHouseUser, FaUserCog } from "react-icons/fa";
+import {
+  FaBloggerB,
+  FaCubes,
+  FaHouseUser,
+  FaSignOutAlt,
+  FaUserCog,
+} from "react-icons/fa";
 import SignOutButton from "../button/SignOutButton";
 
 const AdminNav = () => {
@@ -27,7 +33,7 @@ const AdminNav = () => {
           className={`link ${
             pathname === "/admin/dashboard/blogs" ? "bg-base-300" : ""
           } no-underline`}
-          href="/admin/blogs"
+          href="/admin/dashboard/blogs"
         >
           <FaBloggerB /> Blogs
         </Link>
@@ -89,4 +95,5 @@ export const Swap = () => {
     </label>
   );
 };
+
 export default AdminNav;
