@@ -27,7 +27,7 @@ const RegisterCard = () => {
       password: z
         .string()
         .min(1, "Password is required")
-        .min(6, "Password must have than 6 characters"),
+        .min(6, "Password should have than 6 characters"),
       confirmPassword: z.string().min(1, "This field is required"),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -80,15 +80,15 @@ const RegisterCard = () => {
       });
       if (response.ok) {
         const signInData = await signIn("credentials", {
-          username: e.currentTarget.username.value,
-          password: e.currentTarget.password.value,
+          username: formData.username,
+          password: formData.password,
         });
         if (signInData?.error) {
           setError("Incorrect username or password");
           setIsLoading(false);
         } else {
           router.refresh();
-          router.push("/admin");
+          router.push("/admin/dashboard");
         }
       } else {
         const responseData = await response.json();
@@ -96,6 +96,7 @@ const RegisterCard = () => {
       }
       setIsLoading(false);
     } catch (error: any) {
+      console.log(error)
       setError("something went wrong");
       setIsLoading(false);
     }
@@ -105,22 +106,18 @@ const RegisterCard = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
-          <div
-            className="w-full bg-white dark:bg-inherit rounded-lg shadow border border-gray-300
-           dark:border-gray-700 md:mt-0 sm:max-w-md xl:p-0"
-          >
+          <div className="w-full md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <p className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-gray-100">
+              <p className="text-xl font-bold leading-tight tracking-tight md:text-2xl ">
                 Create your account
               </p>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                <label className="block mb-2 text-sm font-medium">
                   username
                 </label>
                 <input
                   placeholder="JohnDoe"
-                  className="bg-gray-50 dark:bg-gray-950 border border-gray-300 dark:border-gray-700
-                   text-gray-900 dark:text-gray-100 sm:text-sm rounded-lg block w-full p-2.5"
+                  className="border sm:text-sm rounded-lg block w-full p-2.5 "
                   id="username"
                   name="username"
                   type="text"
@@ -132,13 +129,13 @@ const RegisterCard = () => {
                 )}
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                <label className="block mb-2 text-sm font-medium  ">
                   Email
                 </label>
                 <input
                   placeholder="johndoe@gmail.com"
-                  className="bg-gray-50 dark:bg-gray-950 border border-gray-300 dark:border-gray-700
-                   text-gray-900 dark:text-gray-100 sm:text-sm rounded-lg block w-full p-2.5"
+                  className="border border-base-300
+                    sm:text-sm rounded-lg block w-full p-2.5"
                   id="email"
                   type="email"
                   name="email"
@@ -150,12 +147,11 @@ const RegisterCard = () => {
                 )}
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                <label className="block mb-2 text-sm font-medium ">
                   Password
                 </label>
                 <input
-                  className="bg-gray-50 dark:bg-gray-950 border border-gray-300 dark:border-gray-700
-                   text-gray-900 dark:text-gray-100 sm:text-sm rounded-lg block w-full p-2.5"
+                  className=" border-base-300 sm:text-sm rounded-lg block w-full p-2.5"
                   placeholder="••••••••"
                   id="password"
                   type="password"
@@ -168,12 +164,11 @@ const RegisterCard = () => {
                 )}
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                <label className="block mb-2 text-sm font-medium ">
                   Confirm Password
                 </label>
                 <input
-                  className="bg-gray-50 dark:bg-gray-950 border border-gray-300 dark:border-gray-700
-                   text-gray-900 dark:text-gray-100 sm:text-sm rounded-lg block w-full p-2.5"
+                  className="bg-base-50 border border-base-300 sm:text-sm rounded-lg block w-full p-2.5"
                   placeholder="••••••••"
                   id="confirmPassword"
                   type="password"
@@ -190,8 +185,8 @@ const RegisterCard = () => {
                   <Loader />
                 ) : (
                   <button
-                    className="w-full bg-blue-500 dark:bg-blue-800 hover:bg-blue-700 dark:hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 
-                font-medium rounded-lg text-sm px-5 py-2.5 text-center  focus:ring-blue-800 dark:focus:ring-blue-300 text-white"
+                    className="w-full bg-base-200 hover:bg-base-300 focus:ring-4 focus:outline-none focus:ring-base-300
+                font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-base-600 "
                     type="submit"
                   >
                     Let&apos;s start Blogging
