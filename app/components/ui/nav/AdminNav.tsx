@@ -3,12 +3,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { FaBloggerB, FaCubes, FaHouseUser, FaUserCog } from "react-icons/fa";
+import SignOutButton from "../button/SignOutButton";
 
 const AdminNav = () => {
   const pathname = usePathname();
   return (
-    <ul className="menu p-4 w-60 min-h-full bg-base-200 text-base-content list-none 
-    flex flex-col gap-3 md:text-md lg:text-lg lg:pt-8">
+    <ul
+      className="menu p-4 w-60 min-h-full bg-base-200 text-base-content list-none 
+    flex flex-col gap-3 md:text-md lg:text-lg lg:pt-8"
+    >
       <li>
         <Link
           className={`link ${
@@ -40,7 +43,6 @@ const AdminNav = () => {
           Settings
         </Link>
       </li>
-
       <li>
         <Link
           className={`link ${
@@ -52,14 +54,19 @@ const AdminNav = () => {
           My Profile
         </Link>
       </li>
+      <li>
+        <SignOutButton />
+      </li>
     </ul>
   );
 };
 
 export const Swap = () => {
   return (
-    <label 
-    htmlFor="my-drawer-2" className=" w-9 h-9 swap swap-rotate lg:hidden">
+    <label
+      htmlFor="my-drawer-2"
+      className=" w-9 h-9 swap swap-rotate lg:hidden"
+    >
       <input type="checkbox" />
       <svg
         className="swap-off fill-current"
