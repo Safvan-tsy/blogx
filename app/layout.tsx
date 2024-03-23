@@ -1,15 +1,27 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/ui/nav/NavBar";
 import Footer from "./components/Footer";
 import Provider from "./components/Provider";
+import { Roboto } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  weight: ["100", "300", "400", "500", "700", "900"],
+});
 
 export const metadata: Metadata = {
-  title: "Blogs Template",
-  description: "template",
+  title: "BlogX | open source | personal blog",
+  description:
+    "BlogeX is an open source blogging template built with nextjs 13",
+  metadataBase: new URL("https://blogs-flame.vercel.app/"),
+  openGraph: {
+    title: "BlogX | open source | personal blog",
+    description:
+      "BlogeX is an open source blogging template built with nextjs 13",
+    siteName: "BlogX",
+  },
 };
 
 export default function RootLayout({
@@ -19,13 +31,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} flex-col`}>
+      <body className={`font-sans ${roboto.variable} min-h-screen flex-col`}>
         <Provider>
-            <NavBar />
-          <main className="flex-1 min-h-screen">
-            {children}
-          </main>
-            <Footer />
+          <NavBar />
+          <main className="flex-1 ">{children}</main>
+          <Footer />
         </Provider>
       </body>
     </html>
