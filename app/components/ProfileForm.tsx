@@ -2,9 +2,12 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import Loader from "./ui/Loader";
 import * as z from "zod";
-import ProfileFormSkelton from "./ui/ProfileFormSkelton";
+import ProfileFormSkeleton from "./ui/skeleton/ProfileFormSkeleton";
 import { FaRegEdit } from "react-icons/fa";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import profilePic from "@/public/profile.jpg";
+import { useRouter } from "next/navigation";
 
 const ErrorMessage = ({
   text,
@@ -17,20 +20,47 @@ const ErrorMessage = ({
 };
 
 const ProfileForm = () => {
+  const router = useRouter();
   const { data: userData } = useSession();
   const [editMode, setEditMode] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [username, setUsername] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [about, setAbout] = useState("");
+  const [email, setEmail] = useState("");
+  const [image, setImage] = useState("");
   const [validationErrors, setValidationErrors] = useState({
     username: "",
     email: "",
     fullName: "",
     about: "",
-    image: "",
-    password: "",
-    confirmPassword: "",
   });
+
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchData = async () => {
+      try {
+        const headers = new Headers();
+        headers.append("Authorization", userData?.user.username || "");
+
+        const response = await fetch(`/api/admin`, {
+          method: "GET",
+          headers,
+        });
+        const data = await response.json();
+        setUsername(data.user.username);
+        setEmail(data.user.email);
+        setAbout(data.user.about || "");
+        setFullName(data.user.fullName || "");
+      } catch (error) {
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, [userData]);
 
   const userSchema = z.object({
     username: z
@@ -44,7 +74,65 @@ const ProfileForm = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
+    const formData = {
+      username: username,
+      email: email,
+      fullName: fullName,
+      about: about,
+    };
+    try {
+      const validated = userSchema.parse(formData);
+      console.log("Hi");
+      setValidationErrors({
+        username: "",
+        email: "",
+        fullName: "",
+        about: "",
+      });
+    } catch (error: any) {
+      const validationErrorMessages: Record<string, string> = {};
+      (error.errors || []).forEach((err: any) => {
+        validationErrorMessages[err.path[0]] = err.message;
+      });
+      setValidationErrors({
+        username: validationErrorMessages["username"] || "",
+        email: validationErrorMessages["email"] || "",
+        fullName: validationErrorMessages["fullName"] || "",
+        about: validationErrorMessages["about"] || "",
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const data = JSON.stringify(formData);
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      headers.append("Authorization", userData?.user.username || "");
+
+      const response = await fetch(`/api/admin`, {
+        method: "PUT",
+        headers: headers,
+        body: data,
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.isUsernameChange == true) {
+          signOut({
+            redirect: true,
+            callbackUrl: `${window.location.origin}/login`,
+          });
+        }
+      } else {
+        const responseData = await response.json();
+        setError(responseData.message);
+      }
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+      setError("something went wrong");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -60,101 +148,123 @@ const ProfileForm = () => {
           />
         </div>
       </div>
-      <p className="text-xl font-bold leading-tight tracking-tight md:text-2xl ">
+      <p className="text-xl font-bold leading-tight tracking-tight md:text-2xl flex justify-center">
         Hello {userData?.user.username} 👋
       </p>
       {isLoading ? (
-        <ProfileFormSkelton />
+        <ProfileFormSkeleton />
       ) : (
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+          <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto ">
             <div className="w-full ">
               <div className="">
-                <div className="grid grid-cols-2 grid-rows-2 xl:gap-4">
+                <div className="grid grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 xl:gap-4">
                   <div>
-                    <div>
+                    <div className="p-2">
                       <label className="block mb-2 text-sm font-medium">
                         Username
                       </label>
                       <input
-                        placeholder="JohnDoe"
                         className="border sm:text-sm rounded-lg block w-full p-2.5 "
                         id="username"
                         name="username"
                         type="text"
+                        value={username}
                         disabled={editMode ? false : true}
+                        onChange={(e) => setUsername(e.target.value)}
                       />
                       {validationErrors.username != "" && (
                         <ErrorMessage text={validationErrors.username} />
                       )}
                     </div>
-                    <div>
+                    <div className="p-2">
                       <label className="block mb-2 text-sm font-medium">
                         Email
                       </label>
                       <input
-                        placeholder="doe@gmail.com"
                         className="border sm:text-sm rounded-lg block w-full p-2.5 "
                         id="email"
                         name="email"
                         type="email"
+                        value={email}
                         disabled={editMode ? false : true}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                       {validationErrors.email != "" && (
                         <ErrorMessage text={validationErrors.email} />
                       )}
                     </div>
-                    <div>
-                      <label className="block mb-2 text-sm font-medium">
-                        Full Name
-                      </label>
-                      <input
-                        placeholder="John Doe"
-                        className="border sm:text-sm rounded-lg block w-full p-2.5 "
-                        id="fullName"
-                        name="fullName"
-                        type="text"
-                        disabled={editMode ? false : true}
-                      />
-                      {validationErrors.fullName != "" && (
-                        <ErrorMessage text={validationErrors.fullName} />
-                      )}
-                    </div>
-                  </div>
-                  <div>
-                    <div>
+                    <div className="p-2 ">
                       <label className="block mb-2 text-sm font-medium">
                         About
                       </label>
-                      <input
-                        placeholder="JohnDoe"
-                        className="border sm:text-sm rounded-lg block w-full p-2.5 "
+                      <textarea
+                        className="border sm:text-sm rounded-lg block w-full p-2.5 h-32"
                         id="about"
                         name="about"
-                        type="textarea"
+                        value={about}
                         disabled={editMode ? false : true}
+                        onChange={(e) => setAbout(e.target.value)}
                       />
                       {validationErrors.about != "" && (
                         <ErrorMessage text={validationErrors.about} />
                       )}
                     </div>
-                    <div>
+                  </div>
+                  <div>
+                    <div className="p-2">
+                      <label className="block mb-2 text-sm font-medium">
+                        Full Name
+                      </label>
+                      <input
+                        className="border sm:text-sm rounded-lg block w-full p-2.5 "
+                        id="fullName"
+                        name="fullName"
+                        type="text"
+                        value={fullName}
+                        disabled={editMode ? false : true}
+                        onChange={(e) => setFullName(e.target.value)}
+                      />
+                      {validationErrors.fullName != "" && (
+                        <ErrorMessage text={validationErrors.fullName} />
+                      )}
+                    </div>
+                    <div className="p-2">
                       <label className="block mb-2 text-sm font-medium">
                         Profile
                       </label>
-                      <input
-                        type="file"
-                        className="file-input file-input-bordered file-input-accent w-full max-w-xs"
-                        disabled={editMode ? false : true}
-                      />
-                      {validationErrors.image != "" && (
+                      <div className="flex flex-row flex-wrap lg:flex-col items-center gap-2 md:justify-between lg:items-start">
+                        <div className="w-64 carousel rounded-badge">
+                          <div
+                            className="carousel-item hover:-translate-y-2 group bg-neutral-50 duration-500 
+                            h-fit w-fit flex text-neutral-600 flex-col justify-center items-center relative 
+                          rounded-xl overflow-hidden shadow-md lg:mt-0 md:h-fit md:w-fit lg:w-fit lg:h-fit"
+                          >
+                            <Image
+                              src={profilePic}
+                              alt="profile pic"
+                              className="w-full object-cover "
+                            />
+                          </div>
+                        </div>
+                        {editMode && (
+                          <input
+                            type="file"
+                            accept=".png, .jpg, .jpeg"
+                            name="image"
+                            className="file-input file-input-bordered file-input-accent w-full max-w-xs"
+                            disabled={editMode ? false : true}
+                          />
+                        )}
+                      </div>
+                      {/* {validationErrors.image != "" && (
                         <ErrorMessage text={validationErrors.image} />
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
                 {editMode && (
-                  <div className="w-full">
+                  <div className="w-full mt-4 pt-2 md:mt-1 lg:mt-4">
                     {submitLoading ? (
                       <Loader />
                     ) : (
