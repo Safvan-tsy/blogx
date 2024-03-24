@@ -20,7 +20,6 @@ const ErrorMessage = ({
 };
 
 const ProfileForm = () => {
-  const router = useRouter();
   const { data: userData } = useSession();
   const [editMode, setEditMode] = useState(false);
   const [error, setError] = useState("");
@@ -36,31 +35,34 @@ const ProfileForm = () => {
     email: "",
     fullName: "",
     about: "",
+    image: "",
   });
 
+  const fetchData = async () => {
+    try {
+      const headers = new Headers();
+      headers.append("Authorization", userData?.user.username || "");
+
+      const response = await fetch(`/api/admin`, {
+        method: "GET",
+        headers,
+      });
+      const data = await response.json();
+      setEditMode(false);
+      setUsername(data.user.username);
+      setEmail(data.user.email);
+      setAbout(data.user.about || "");
+      setFullName(data.user.fullName || "");
+      setImage(data.user.image || "");
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
   useEffect(() => {
     setIsLoading(true);
-    const fetchData = async () => {
-      try {
-        const headers = new Headers();
-        headers.append("Authorization", userData?.user.username || "");
-
-        const response = await fetch(`/api/admin`, {
-          method: "GET",
-          headers,
-        });
-        const data = await response.json();
-        setUsername(data.user.username);
-        setEmail(data.user.email);
-        setAbout(data.user.about || "");
-        setFullName(data.user.fullName || "");
-      } catch (error) {
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchData();
-  }, [userData]);
+  }, [userData?.user]);
 
   const userSchema = z.object({
     username: z
@@ -79,17 +81,19 @@ const ProfileForm = () => {
       email: email,
       fullName: fullName,
       about: about,
+      image: image,
     };
     try {
       const validated = userSchema.parse(formData);
-      console.log("Hi");
       setValidationErrors({
         username: "",
         email: "",
         fullName: "",
         about: "",
+        image: "",
       });
     } catch (error: any) {
+      console.log(error);
       const validationErrorMessages: Record<string, string> = {};
       (error.errors || []).forEach((err: any) => {
         validationErrorMessages[err.path[0]] = err.message;
@@ -99,12 +103,13 @@ const ProfileForm = () => {
         email: validationErrorMessages["email"] || "",
         fullName: validationErrorMessages["fullName"] || "",
         about: validationErrorMessages["about"] || "",
+        image: validationErrorMessages["image"] || "",
       });
       return;
     }
 
     try {
-      setIsLoading(true);
+      setSubmitLoading(true);
       const data = JSON.stringify(formData);
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
@@ -127,11 +132,12 @@ const ProfileForm = () => {
         const responseData = await response.json();
         setError(responseData.message);
       }
-      setIsLoading(false);
+      setSubmitLoading(false);
+      fetchData();
     } catch (error: any) {
       console.log(error);
       setError("something went wrong");
-      setIsLoading(false);
+      setSubmitLoading(false);
     }
   };
 
@@ -240,26 +246,36 @@ const ProfileForm = () => {
                             h-fit w-fit flex text-neutral-600 flex-col justify-center items-center relative 
                           rounded-xl overflow-hidden shadow-md lg:mt-0 md:h-fit md:w-fit lg:w-fit lg:h-fit"
                           >
-                            <Image
-                              src={profilePic}
-                              alt="profile pic"
-                              className="w-full object-cover "
-                            />
+                            {image? (
+                              <img
+                                src={image}
+                                alt="profile pic"
+                                className="w-full object-cover "
+                              />
+                            ) : (
+                              <Image
+                                src={profilePic}
+                                alt="profile pic"
+                                className="w-full object-cover "
+                              />
+                            )}
                           </div>
                         </div>
                         {editMode && (
                           <input
-                            type="file"
-                            accept=".png, .jpg, .jpeg"
+                            type="text"
                             name="image"
-                            className="file-input file-input-bordered file-input-accent w-full max-w-xs"
+                            value={image}
+                            placeholder="paste image link here"
+                            className="border sm:text-sm rounded-lg block w-full p-2.5 max-w-xs"
                             disabled={editMode ? false : true}
+                            onChange={(e) => setImage(e.target.value)}
                           />
                         )}
                       </div>
-                      {/* {validationErrors.image != "" && (
+                      {validationErrors.image != "" && (
                         <ErrorMessage text={validationErrors.image} />
-                      )} */}
+                      )}
                     </div>
                   </div>
                 </div>

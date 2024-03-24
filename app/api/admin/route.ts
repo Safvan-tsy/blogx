@@ -1,5 +1,7 @@
 import { db } from "@/lib/db";
+import { writeFile } from "fs/promises";
 import { NextResponse } from "next/server";
+import { join } from "path";
 
 export async function GET(req: Request) {
   try {
@@ -57,9 +59,9 @@ export async function PUT(req: Request) {
         email: body.email,
         fullName: body.fullName,
         about: body.about,
+        image: body.image,
       },
     });
-    console.log(updatedUser);
 
     return NextResponse.json(
       { status: "success", user: updatedUser, isUsernameChange },
@@ -75,3 +77,49 @@ export async function PUT(req: Request) {
     );
   }
 }
+// export async function PATCH(req: Request) {
+//   try {
+//     const token = req.headers.get("Authorization");
+//     if (!token)
+//       return NextResponse.json(
+//         {
+//           message: "Invalid User",
+//         },
+//         { status: 403 }
+//       );
+//     const user = await db.user.findUnique({ where: { username: token } });
+//     if (!user)
+//       return NextResponse.json(
+//         {
+//           message: "No user found with that token",
+//         },
+//         { status: 404 }
+//       );
+//     const formData = await req.formData();
+//     const image: File | null = formData.get("image") as unknown as File;
+//     if (!image) {
+//       return NextResponse.json(
+//         {
+//           message: "No Image found in request",
+//         },
+//         { status: 404 }
+//       );
+//     }
+
+//     const bytes = await image.arrayBuffer();
+//     const buffer = Buffer.from(bytes);
+//     const path = join(__dirname, "../../../public", image.name);
+//     await writeFile(path, buffer);
+
+//     return NextResponse.json({ status: "success" }, { status: 200 });
+//   } catch (error) {
+//     console.log(error)
+//     return NextResponse.json(
+//       {
+//         message: "Something went wrong",
+//         error,
+//       },
+//       { status: 500 }
+//     );
+//   }
+// }
