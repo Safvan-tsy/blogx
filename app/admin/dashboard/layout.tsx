@@ -8,10 +8,10 @@ export default function DashboardLayout({
 }) {
   return (
     <section className="min-h-screan">
-      <div className="drawer lg:drawer-open">
+      <div className="lg:drawer lg:drawer-open">
         <Swap/>
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center">
+        <div className="drawer-content min-h-screen">
           {children}
         </div>
         <div className="drawer-side">
