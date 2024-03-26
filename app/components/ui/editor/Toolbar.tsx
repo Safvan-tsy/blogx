@@ -38,7 +38,7 @@ const Toolbar = ({ editor, content }: Props) => {
           }}
           className={
             editor.isActive("bold")
-              ? "bg-sky-700 text-white p-2 rounded-lg"
+              ? "bg-sky-700 text-white p-1 rounded-lg"
               : "text-sky-400"
           }
         >
@@ -51,7 +51,7 @@ const Toolbar = ({ editor, content }: Props) => {
           }}
           className={
             editor.isActive("italic")
-              ? "bg-sky-700 text-white p-2 rounded-lg"
+              ? "bg-sky-700 text-white p-1 rounded-lg"
               : "text-sky-400"
           }
         >
@@ -64,7 +64,7 @@ const Toolbar = ({ editor, content }: Props) => {
           }}
           className={
             editor.isActive("underline")
-              ? "bg-sky-700 text-white p-2 rounded-lg"
+              ? "bg-sky-700 text-white p-1 rounded-lg"
               : "text-sky-400"
           }
         >
@@ -77,7 +77,7 @@ const Toolbar = ({ editor, content }: Props) => {
           }}
           className={
             editor.isActive("strike")
-              ? "bg-sky-700 text-white p-2 rounded-lg"
+              ? "bg-sky-700 text-white p-1 rounded-lg"
               : "text-sky-400"
           }
         >
@@ -90,7 +90,7 @@ const Toolbar = ({ editor, content }: Props) => {
           }}
           className={
             editor.isActive("heading", { level: 2 })
-              ? "bg-sky-700 text-white p-2 rounded-lg"
+              ? "bg-sky-700 text-white p-1 rounded-lg"
               : "text-sky-400"
           }
         >
@@ -104,7 +104,7 @@ const Toolbar = ({ editor, content }: Props) => {
           }}
           className={
             editor.isActive("bulletList")
-              ? "bg-sky-700 text-white p-2 rounded-lg"
+              ? "bg-sky-700 text-white p-1 rounded-lg"
               : "text-sky-400"
           }
         >
@@ -117,7 +117,7 @@ const Toolbar = ({ editor, content }: Props) => {
           }}
           className={
             editor.isActive("orderedList")
-              ? "bg-sky-700 text-white p-2 rounded-lg"
+              ? "bg-sky-700 text-white p-1 rounded-lg"
               : "text-sky-400"
           }
         >
@@ -130,7 +130,7 @@ const Toolbar = ({ editor, content }: Props) => {
           }}
           className={
             editor.isActive("blockquote")
-              ? "bg-sky-700 text-white p-2 rounded-lg"
+              ? "bg-sky-700 text-white p-1 rounded-lg"
               : "text-sky-400"
           }
         >
@@ -143,7 +143,7 @@ const Toolbar = ({ editor, content }: Props) => {
           }}
           className={
             editor.isActive("code")
-              ? "bg-sky-700 text-white p-2 rounded-lg"
+              ? "bg-sky-700 text-white p-1 rounded-lg"
               : "text-sky-400"
           }
         >
@@ -156,7 +156,7 @@ const Toolbar = ({ editor, content }: Props) => {
           }}
           className={
             editor.isActive("undo")
-              ? "bg-sky-700 text-white p-2 rounded-lg"
+              ? "bg-sky-700 text-white p-1 rounded-lg"
               : "text-sky-400 hover:bg-sky-700 hover:text-white p-1 hover:rounded-lg"
           }
         >
@@ -169,21 +169,21 @@ const Toolbar = ({ editor, content }: Props) => {
           }}
           className={
             editor.isActive("redo")
-              ? "bg-sky-700 text-white p-2 rounded-lg"
+              ? "bg-sky-700 text-white p-1 rounded-lg"
               : "text-sky-400 hover:bg-sky-700 hover:text-white p-1 hover:rounded-lg"
           }
         >
           <FaRedo className="w-5 h-5" />
         </button>
       </div>
-      {content && (
+      {/* {content && (
         <button
           type="submit"
           className="px-4 bg-sky-700 text-white py-2 rounded-md"
         >
           Add
         </button>
-      )}
+      )} */}
     </div>
   );
 };
