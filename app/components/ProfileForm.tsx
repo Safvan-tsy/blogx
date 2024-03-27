@@ -8,7 +8,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import profilePic from "@/public/profile.jpg";
 
-const ErrorMessage = ({
+export const ErrorMessage = ({
   text,
   classes,
 }: {

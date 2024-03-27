@@ -13,7 +13,7 @@ const Tiptap = ({ onChange, content }: any) => {
     editorProps: {
       attributes: {
         class:
-          "flex flex-col textarea p-2.5 border-none",
+          "flex flex-col textarea p-2.5 lg:p-5 min-h-[20rem] ",
       },
     },
     onUpdate: ({ editor }) => {
@@ -22,7 +22,7 @@ const Tiptap = ({ onChange, content }: any) => {
   });
 
   return (
-    <div className="">
+    <div className="editor">
       <Toolbar editor={editor} content={content} />
       <EditorContent style={{ whiteSpace: "pre-line" }} editor={editor} />
     </div>
