@@ -1,23 +1,16 @@
+import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
-    //logic to get data from db
-    const id = req.url.split("blogs/")[1];
-    return NextResponse.json(
-      {
-        status: "success",
-        blog: {
-          id: id,
-          title: "sample",
-        },
-      },
-      { status: 200 }
-    );
+    const id = req.url.split("post/")[1];
+    const post = await db.post.findUnique({ where: { id: Number(id) } });
+
+    return NextResponse.json({ status: "success", post }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       {
-        message: "Error",
+        message: "Something went wrong",
         error,
       },
       { status: 500 }

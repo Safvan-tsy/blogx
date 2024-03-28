@@ -18,3 +18,13 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  status    String   @default("draft")
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

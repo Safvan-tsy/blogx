@@ -1,7 +1,5 @@
 import { db } from "@/lib/db";
-import { writeFile } from "fs/promises";
 import { NextResponse } from "next/server";
-import { join } from "path";
 
 export async function GET(req: Request) {
   try {

@@ -7,9 +7,8 @@ import { FaRegEdit } from "react-icons/fa";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import profilePic from "@/public/profile.jpg";
-import { useRouter } from "next/navigation";
 
-const ErrorMessage = ({
+export const ErrorMessage = ({
   text,
   classes,
 }: {
@@ -23,7 +22,7 @@ const ProfileForm = () => {
   const { data: userData } = useSession();
   const [editMode, setEditMode] = useState(false);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
@@ -60,8 +59,9 @@ const ProfileForm = () => {
     }
   };
   useEffect(() => {
-    setIsLoading(true);
+    if (userData?.user) {
     fetchData();
+    }
   }, [userData?.user]);
 
   const userSchema = z.object({
@@ -285,7 +285,7 @@ const ProfileForm = () => {
                       <Loader />
                     ) : (
                       <button
-                        className="w-full bg-base-200 hover:bg-base-300 focus:ring-4 focus:outline-none
+                        className="w-full bg-base-100 hover:bg-base-300 focus:ring-4 focus:outline-none
                          focus:ring-base-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-base-600 "
                         type="submit"
                       >

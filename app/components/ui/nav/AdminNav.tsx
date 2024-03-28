@@ -6,6 +6,7 @@ import {
   FaBloggerB,
   FaCubes,
   FaHouseUser,
+  FaPlus,
   FaSignOutAlt,
   FaUserCog,
 } from "react-icons/fa";
@@ -59,6 +60,17 @@ const AdminNav = () => {
         >
           <FaHouseUser />
           My Profile
+        </Link>
+      </li>
+      <li>
+        <Link
+          className={`link ${
+            pathname === "/admin/dashboard/new" ? "bg-base-300" : ""
+          } no-underline active:bg-base-300`}
+          href="/admin/dashboard/new"
+        >
+          <FaPlus />
+          Create Post
         </Link>
       </li>
       <li>

@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer components {
+    .editor h1 {
+      @apply text-4xl;
+      @apply font-bold;
+    }
+    .editor h2 {
+      @apply text-3xl;
+      @apply font-bold;
+    }
+    .editor h3 {
+      @apply text-2xl;
+      @apply font-bold;
+    }
+    .editor h4 {
+      @apply text-xl;
+      @apply font-semibold;
+    }
+    .editor h5 {
+      @apply text-lg;
+      @apply font-semibold;
+    }
+    .editor h6 {
+      @apply text-sm;
+      @apply font-semibold;
+    }
+    .editor a {
+      @apply text-blue-600 underline;
+    }
+    .editor ul {
+      @apply list-disc;
+    }
+    .editor ol {
+      @apply list-decimal;
+    }
+    .editor blockquote {
+      @apply pl-4;
+      @apply border-l-4 border-gray-600
+    }
+  }
