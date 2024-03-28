@@ -1,17 +1,19 @@
 import React from "react";
 
 type SelectProps = {
-  title: string;
   options: string[];
   onChange: (value: string) => void;
+  title?: string;
 };
 
-const Select = ({ title, options, onChange }: SelectProps) => {
+const Select = ({ options, onChange, title }: SelectProps) => {
   return (
     <label className="form-control w-full max-w-xs">
-      <div className="label">
-        <span className="label-text">{title}</span>
-      </div>
+      {title && (
+        <div className="label">
+          <span className="label-text">{title}</span>
+        </div>
+      )}
       <select
         className="select select-bordered"
         onChange={(e) => onChange(e.target.value)}
