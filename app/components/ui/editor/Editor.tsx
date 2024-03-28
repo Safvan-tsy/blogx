@@ -10,11 +10,11 @@ import { useSession } from "next-auth/react";
 const Editor = ({ id }: { id?: number }) => {
   const { data: userData } = useSession();
   const [content, setContent] = useState<string>("");
-  const [image, setImage] = useState("");
-  const [error, setError] = useState("");
-  const [title, setTitle] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [submitLoading, setSubmitLoading] = useState(false);
+  const [image, setImage] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
   const [validationErrors, setValidationErrors] = useState({
     title: "",
     content: "",
@@ -30,6 +30,7 @@ const Editor = ({ id }: { id?: number }) => {
         headers,
       });
       const data = await response.json();
+      console.log(data);
       setTitle(data.post.title);
       setContent(data.post.content || "");
       setImage(data.post.image || "");
@@ -37,6 +38,14 @@ const Editor = ({ id }: { id?: number }) => {
     } finally {
       setIsLoading(false);
     }
+  };
+  const clearData = async () => {
+    setIsLoading(true);
+    setTitle("");
+    setContent("");
+    setImage("");
+
+    setIsLoading(false);
   };
 
   const updatePost = async (
@@ -57,8 +66,7 @@ const Editor = ({ id }: { id?: number }) => {
       });
       if (response.ok) {
         setSubmitLoading(false);
-        const data = await response.json();
-        fetchData(data.post.id);
+        clearData();
       } else {
         const responseData = await response.json();
         setError(responseData.message);
@@ -88,8 +96,7 @@ const Editor = ({ id }: { id?: number }) => {
       });
       if (response.ok) {
         setSubmitLoading(false);
-        const data = await response.json();
-        fetchData(data.post.id);
+        clearData();
       } else {
         const responseData = await response.json();
         setError(responseData.message);
