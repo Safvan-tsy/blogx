@@ -1,12 +1,13 @@
 import React from "react";
 
 type SelectProps = {
+  selected: string;
   options: string[];
   onChange: (value: string) => void;
   title?: string;
 };
 
-const Select = ({ options, onChange, title }: SelectProps) => {
+const Select = ({ selected, options, onChange, title }: SelectProps) => {
   return (
     <label className="form-control w-full max-w-xs">
       {title && (
@@ -18,9 +19,11 @@ const Select = ({ options, onChange, title }: SelectProps) => {
         className="select select-bordered"
         onChange={(e) => onChange(e.target.value)}
       >
-        <option selected>All</option>
+        <option defaultValue={selected}>{selected}</option>
         {options.map((item) => (
-          <option>{item}</option>
+          <option key={item} value={item}>
+            {item}
+          </option>
         ))}
       </select>
     </label>
