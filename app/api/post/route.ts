@@ -1,19 +1,11 @@
+import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    //logic to get data from db
-    return NextResponse.json(
-      {
-        status: "success",
-        blogs: [
-          {
-            title: "sample",
-          },
-        ],
-      },
-      { status: 200 }
-    );
+    const posts = await db.post.findMany();
+
+    return NextResponse.json({ status: "success", posts }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       {

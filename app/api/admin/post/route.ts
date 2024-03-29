@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { Post } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -71,6 +72,48 @@ export async function PUT(req: Request) {
     return NextResponse.json(
       {
         message: "Something went wrong",
+        error,
+      },
+      { status: 500 }
+    );
+  }
+}
+export async function GET(req: Request) {
+  try {
+    const url = new URL(req.url);
+    const page = Number(url.searchParams.get("page"));
+    const limit = Number(url.searchParams.get("limit"));
+    const status = url.searchParams.get("status");
+
+    let posts: Post[];
+    if (status && status != "") {
+      posts = await db.post.findMany({
+        skip: (page - 1) * limit,
+        take: limit,
+        where: {
+          status: {
+            contains: status,
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+    } else {
+      posts = await db.post.findMany({
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+    }
+
+    return NextResponse.json({ status: "success", posts }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "Error",
         error,
       },
       { status: 500 }
