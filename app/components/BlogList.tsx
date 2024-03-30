@@ -205,9 +205,12 @@ const BlogList: React.FC = () => {
                   </td>
                   <th>
                     <div className="flex flex-row flex-wrap items-center justify-between gap-2">
-                      <button className="btn btn-sm">
+                      <Link
+                        href={`/admin/dashboard/blogs/${item.id}`}
+                        className="btn btn-sm"
+                      >
                         <FaEdit />
-                      </button>
+                      </Link>
                       <AlertModal
                         text="Are you sure to delete this Post"
                         onYes={() => onDelete(item.id)}

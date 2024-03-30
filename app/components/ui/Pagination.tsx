@@ -5,7 +5,6 @@ const Pagination: React.FC<{
   onChange: (page: number) => void;
 }> = ({ currentPage, onChange }) => {
   const changePageMinus = () => {
-    if (currentPage == 1) return;
     const page = currentPage - 1;
     onChange(page);
   };
@@ -16,7 +15,11 @@ const Pagination: React.FC<{
 
   return (
     <div className="join">
-      <button className="join-item btn" onClick={changePageMinus}>
+      <button
+        className="join-item btn"
+        disabled={currentPage == 1 ? true : false}
+        onClick={changePageMinus}
+      >
         «
       </button>
       <button className="join-item btn">{currentPage}</button>
