@@ -36,20 +36,24 @@ const BlogList: React.FC = () => {
         page: query.page.toString(),
         limit: query.limit.toString(),
         status: query.status || "",
-      }).toString(); // Serialize query object to query string
+      }).toString();
 
       const response = await fetch(`/api/admin/post?${queryString}`, {
         method: "GET",
         headers,
       });
       const data = await response.json();
-      console.log(data);
       setPosts(data.posts);
     } catch (error) {
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchData();
+  }, [query]);
 
   const deleteData = async (id: number) => {
     try {
@@ -74,22 +78,20 @@ const BlogList: React.FC = () => {
     deleteData(id);
   };
   const selectOnChange = async (value: string) => {
-    console.log(value);
     setIsLoading(true);
-    setQuery({
-      page: query.page,
-      limit: query.limit,
-      status:
-        value == "Draft" ? "draft" : value == "Published" ? "published" : "",
-    });
-    fetchData();
+    if (value == "All") value = "";
+    setQuery((prevQuery) => ({
+      ...prevQuery,
+      status: value.toLowerCase(),
+    }));
   };
 
   const pageOnChange = async (page: number) => {
     setIsLoading(true);
-    setQuery({ page: page, limit: query.limit });
-    fetchData();
-    console.log(page);
+    setQuery((prevQuery) => ({
+      ...prevQuery,
+      page
+    }));
   };
 
   useEffect(() => {
