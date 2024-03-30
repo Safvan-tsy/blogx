@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
-import { Post } from "@prisma/client";
 import { NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
 
 export async function POST(req: Request) {
   try {
@@ -84,30 +84,39 @@ export async function GET(req: Request) {
     const page = Number(url.searchParams.get("page"));
     const limit = Number(url.searchParams.get("limit"));
     const status = url.searchParams.get("status");
+    const keyword = url.searchParams.get("keyword");
 
-    let posts: Post[];
-    if (status && status != "") {
-      posts = await db.post.findMany({
-        skip: (page - 1) * limit,
-        take: limit,
+    let query: Prisma.PostFindManyArgs = {
+      skip: (page - 1) * limit,
+      take: limit,
+    };
+
+    if (status && status != "")
+      query = {
+        ...query,
         where: {
-          status: {
-            contains: status,
+          status: status,
+        },
+      };
+
+    if (keyword && keyword != "")
+      query = {
+        skip: query.skip,
+        take: query.take,
+        where: {
+          ...query.where,
+          title: {
+            search: keyword,
           },
         },
-        orderBy: {
-          createdAt: "desc",
-        },
-      });
-    } else {
-      posts = await db.post.findMany({
-        skip: (page - 1) * limit,
-        take: limit,
-        orderBy: {
-          createdAt: "desc",
-        },
-      });
-    }
+      };
+      
+    const posts = await db.post.findMany({
+      ...query,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
 
     return NextResponse.json({ status: "success", posts }, { status: 200 });
   } catch (error) {

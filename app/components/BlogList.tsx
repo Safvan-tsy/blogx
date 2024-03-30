@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { FaEdit, FaPlus, FaTrashAlt } from "react-icons/fa";
+import React, { FormEvent, useEffect, useState } from "react";
+import { FaEdit, FaPlus, FaSearch, FaTrashAlt } from "react-icons/fa";
 import Link from "next/link";
 import Select from "./ui/Select";
 import BlogListSkeleton from "./ui/skeleton/BlogListSkeleton";
@@ -18,6 +18,7 @@ const BlogList: React.FC = () => {
     page: number;
     limit: number;
     status?: string;
+    keyword?: string;
   }>({
     page: 1,
     limit: 5,
@@ -36,6 +37,7 @@ const BlogList: React.FC = () => {
         page: query.page.toString(),
         limit: query.limit.toString(),
         status: query.status || "",
+        keyword: query.keyword || "",
       }).toString();
 
       const response = await fetch(`/api/admin/post?${queryString}`, {
@@ -90,7 +92,17 @@ const BlogList: React.FC = () => {
     setIsLoading(true);
     setQuery((prevQuery) => ({
       ...prevQuery,
-      page
+      page,
+    }));
+  };
+  const searchOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const keyword = e.currentTarget.keyword.value;
+    // if (keyword == "") return;
+    setIsLoading(true);
+    setQuery((prevQuery) => ({
+      ...prevQuery,
+      keyword,
     }));
   };
 
@@ -107,11 +119,20 @@ const BlogList: React.FC = () => {
       justify-center md:justify-between gap-3"
       >
         <div>
-          <input
-            type="text"
-            placeholder="Search"
-            className="input input-bordered w-full md:w-auto lg:w-[20rem] xl:w-[25rem]"
-          />
+          <form className="flex" onSubmit={searchOnSubmit}>
+            <div className="input input-bordered flex items-center justify-between w-full">
+              <input
+                type="text"
+                placeholder="Search"
+                id="keyword"
+                name="keyword"
+                className=" md:w-auto lg:w-[20rem] xl:w-[25rem]"
+              />
+              <button type="submit" className="">
+                <FaSearch className="w-5 h-5 lg:w-6 lg:h-6" />
+              </button>
+            </div>
+          </form>
         </div>
         <div className="grid grid-rows-1 grid-cols-2 items-center gap-2">
           <Select
@@ -145,7 +166,7 @@ const BlogList: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {posts.map((item: Post) => (
+              {posts?.map((item: Post) => (
                 <tr key={item.id}>
                   <th>
                     <label>
