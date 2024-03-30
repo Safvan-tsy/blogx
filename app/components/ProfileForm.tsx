@@ -18,7 +18,7 @@ export const ErrorMessage = ({
   return <p className={`text-sm text-red-500 ${classes}`}>{text}</p>;
 };
 
-const ProfileForm = () => {
+const ProfileForm: React.FC = () => {
   const { data: userData } = useSession();
   const [editMode, setEditMode] = useState(false);
   const [error, setError] = useState("");
@@ -60,7 +60,7 @@ const ProfileForm = () => {
   };
   useEffect(() => {
     if (userData?.user) {
-    fetchData();
+      fetchData();
     }
   }, [userData?.user]);
 
@@ -246,7 +246,7 @@ const ProfileForm = () => {
                             h-fit w-fit flex text-neutral-600 flex-col justify-center items-center relative 
                           rounded-xl overflow-hidden shadow-md lg:mt-0 md:h-fit md:w-fit lg:w-fit lg:h-fit"
                           >
-                            {image? (
+                            {image ? (
                               <img
                                 src={image}
                                 alt="profile pic"
