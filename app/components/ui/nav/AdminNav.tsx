@@ -40,7 +40,7 @@ const AdminNav = () => {
           <FaBloggerB /> Blogs
         </Link>
       </li>
-      <li>
+      {/* <li>
         <Link
           className={`link ${
             pathname === "/admin/dashboard/settings" ? "bg-base-300" : ""
@@ -50,7 +50,7 @@ const AdminNav = () => {
           <FaUserCog />
           Settings
         </Link>
-      </li>
+      </li> */}
       <li>
         <Link
           className={`link ${

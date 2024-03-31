@@ -17,9 +17,9 @@ const Select = ({ selected, options, onChange, title }: SelectProps) => {
       )}
       <select
         className="select select-bordered"
+        value={selected}
         onChange={(e) => onChange(e.target.value)}
       >
-        <option defaultValue={selected}>{selected}</option>
         {options.map((item) => (
           <option key={item} value={item}>
             {item}

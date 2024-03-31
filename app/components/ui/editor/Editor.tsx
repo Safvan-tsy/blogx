@@ -6,10 +6,14 @@ import EditorSkeleton from "../skeleton/EditorSkeleton";
 import * as z from "zod";
 import { ErrorMessage } from "../../ProfileForm";
 import { useSession } from "next-auth/react";
+import Select from "../Select";
+import { useRouter } from "next/navigation";
 
 const Editor = ({ id }: { id?: number }) => {
+  const router = useRouter();
   const { data: userData } = useSession();
   const [content, setContent] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [title, setTitle] = useState<string>("");
@@ -34,6 +38,7 @@ const Editor = ({ id }: { id?: number }) => {
       setTitle(data.post.title);
       setContent(data.post.content || "");
       setImage(data.post.image || "");
+      setStatus(data.post.status || "");
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -44,13 +49,22 @@ const Editor = ({ id }: { id?: number }) => {
     setTitle("");
     setContent("");
     setImage("");
+    setStatus("");
 
     setIsLoading(false);
   };
-
+  const selectOnChange = (value: string) => {
+    setStatus(value.toLowerCase());
+  };
   const updatePost = async (
     id: number,
-    formData: { title: string; content: string; image: string; id: number }
+    formData: {
+      id: number;
+      status: string;
+      title: string;
+      content: string;
+      image: string;
+    }
   ) => {
     try {
       setSubmitLoading(true);
@@ -67,6 +81,7 @@ const Editor = ({ id }: { id?: number }) => {
       if (response.ok) {
         setSubmitLoading(false);
         clearData();
+        router.push("/admin/dashboard/blogs");
       } else {
         const responseData = await response.json();
         setError(responseData.message);
@@ -97,12 +112,12 @@ const Editor = ({ id }: { id?: number }) => {
       if (response.ok) {
         setSubmitLoading(false);
         clearData();
+        router.push("/admin/dashboard/blogs");
       } else {
         const responseData = await response.json();
         setError(responseData.message);
       }
     } catch (error: any) {
-      console.log(error);
       setError("something went wrong");
       setSubmitLoading(false);
     }
@@ -153,7 +168,8 @@ const Editor = ({ id }: { id?: number }) => {
     }
 
     if (id) {
-      const data = { id, ...formData };
+      console.group(content);
+      const data = { id, status, ...formData };
       await updatePost(id, data);
     } else {
       await createPost(formData);
@@ -218,15 +234,25 @@ const Editor = ({ id }: { id?: number }) => {
                       <ErrorMessage text={validationErrors.title} />
                     )}
                   </div>
+                  {id && (
+                    <div className="p-2">
+                      <Select
+                        selected={status == "draft" ? "Draft" : "Published"}
+                        title="Status"
+                        onChange={selectOnChange}
+                        options={["Published", "Draft"]}
+                      />
+                    </div>
+                  )}
                   <div className="p-2">
                     <label className="block mb-2 text-sm font-medium">
                       Content
                     </label>
                     <Tiptap
-                      content={content}
                       onChange={(newContent: string) =>
                         handleContentChange(newContent)
                       }
+                      content={content}
                     />
                   </div>
                 </div>
@@ -239,7 +265,7 @@ const Editor = ({ id }: { id?: number }) => {
                        focus:ring-base-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-base-600 "
                       type="submit"
                     >
-                      Save Draft
+                      {id ? "Update post" : "Save Draft"}
                     </button>
                   )}
                   {error && <ErrorMessage text={error} classes="text-center" />}

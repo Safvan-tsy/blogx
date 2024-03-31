@@ -54,12 +54,13 @@ export async function PUT(req: Request) {
         { status: 404 }
       );
     const body = await req.json();
-
+    const id = Number(body.id);
     const updatedPost = await db.post.update({
-      where: { id: body.id },
+      where: { id: id },
       data: {
         title: body.title,
         content: body.content,
+        status: body.status,
         image: body.image,
       },
     });
@@ -69,6 +70,7 @@ export async function PUT(req: Request) {
       { status: 200 }
     );
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       {
         message: "Something went wrong",
@@ -110,7 +112,7 @@ export async function GET(req: Request) {
           },
         },
       };
-      
+
     const posts = await db.post.findMany({
       ...query,
       orderBy: {

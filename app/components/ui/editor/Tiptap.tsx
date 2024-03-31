@@ -4,7 +4,10 @@ import StarterKit from "@tiptap/starter-kit";
 import Toolbar from "./Toolbar";
 import Underline from "@tiptap/extension-underline";
 
-const Tiptap = ({ onChange, content }: any) => {
+const Tiptap: React.FC<{
+  onChange: (newContent: string) => void;
+  content: string;
+}> = ({ onChange, content }) => {
   const handleChange = (newContent: string) => {
     onChange(newContent);
   };
@@ -12,8 +15,7 @@ const Tiptap = ({ onChange, content }: any) => {
     extensions: [StarterKit, Underline],
     editorProps: {
       attributes: {
-        class:
-          "flex flex-col textarea p-2.5 lg:p-5 min-h-[20rem] ",
+        class: "flex flex-col textarea p-2.5 lg:p-5 min-h-[20rem]",
       },
     },
     onUpdate: ({ editor }) => {
