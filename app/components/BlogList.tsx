@@ -26,7 +26,7 @@ const BlogList: React.FC = () => {
 
   const selectProps = {
     title: "status",
-    options: ["Draft", "Published"],
+    options: ["Draft", "Published", "All"],
   };
 
   const fetchData = async () => {
@@ -200,21 +200,32 @@ const BlogList: React.FC = () => {
                     {item.status == "draft" ? (
                       <div className="btn btn-sm text-warning">Draft</div>
                     ) : (
-                      <div className="btn text-success">Published</div>
+                      <div className="btn btn-sm text-success">Published</div>
                     )}
                   </td>
                   <th>
                     <div className="flex flex-row flex-wrap items-center justify-between gap-2">
-                      <Link
-                        href={`/admin/dashboard/blogs/${item.id}`}
-                        className="btn btn-sm"
+                      <div
+                        className="tooltip tooltip-bottom"
+                        data-tip="Edit Post"
                       >
-                        <FaEdit />
-                      </Link>
-                      <AlertModal
-                        text="Are you sure to delete this Post"
-                        onYes={() => onDelete(item.id)}
-                      />
+                        <Link
+                          href={`/admin/dashboard/blogs/${item.id}`}
+                          className="btn btn-sm"
+                        >
+                          <FaEdit />
+                        </Link>
+                      </div>
+
+                      <div
+                        className="tooltip tooltip-bottom"
+                        data-tip="Delete"
+                      >
+                        <AlertModal
+                          text="Are you sure to delete this Post"
+                          onYes={() => onDelete(item.id)}
+                        />
+                      </div>
                     </div>
                   </th>
                 </tr>

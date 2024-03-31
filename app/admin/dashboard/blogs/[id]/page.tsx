@@ -1,10 +1,15 @@
+import Editor from "@/app/components/ui/editor/Editor";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import React from "react";
 
-const page = () => {
+const page: React.FC<{ params: any }> = ({ params }) => {
   return (
-    <div className=" p-2 m-2 sm:m-3 md:m-4 lg:m-5 xl:m-6">
-      hi
-    </div>
+    <>
+      <div className="bg-base-200 rounded-md p-2 m-2 sm:m-3 md:m-4 lg:m-5 xl:m-6">
+        <h3 className="flex justify-center font-medium">Edit post</h3>
+        <Editor id={params.id} />
+      </div>
+    </>
   );
 };
 
