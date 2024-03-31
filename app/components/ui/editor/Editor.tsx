@@ -234,14 +234,16 @@ const Editor = ({ id }: { id?: number }) => {
                       <ErrorMessage text={validationErrors.title} />
                     )}
                   </div>
-                  <div className="p-2">
-                    <Select
-                      selected={status == "draft" ? "Draft" : "Published"}
-                      title="Status"
-                      onChange={selectOnChange}
-                      options={["Published", "Draft"]}
-                    />
-                  </div>
+                  {id && (
+                    <div className="p-2">
+                      <Select
+                        selected={status == "draft" ? "Draft" : "Published"}
+                        title="Status"
+                        onChange={selectOnChange}
+                        options={["Published", "Draft"]}
+                      />
+                    </div>
+                  )}
                   <div className="p-2">
                     <label className="block mb-2 text-sm font-medium">
                       Content

@@ -1,5 +1,4 @@
 import Editor from "@/app/components/ui/editor/Editor";
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import React from "react";
 
 const page: React.FC<{ params: any }> = ({ params }) => {
