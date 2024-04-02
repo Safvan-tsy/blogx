@@ -109,19 +109,5 @@ export const Swap = () => {
   );
 };
 
-export const GotoIcon = () => {
-  const { data: session } = useSession();
 
-  return (
-    <div className="hidden md:flex cursor-pointer">
-      {session && session.user && (
-        <div className="tooltip tooltip-bottom" data-tip="Go to dashboard">
-          <Link href="/admin/dashboard">
-            <FaSignOutAlt className="w-6 h-6" />
-          </Link>
-        </div>
-      )}
-    </div>
-  );
-};
 export default AdminNav;

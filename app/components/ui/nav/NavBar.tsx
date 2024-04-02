@@ -2,16 +2,16 @@ import ThemeSwitch from "../../ThemeSwitch";
 import Search from "../Search";
 import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
-import { GotoIcon } from "./AdminNav";
 import Image from "next/image";
 import logo from "@/public/logo.png";
+import { GotoIcon } from "./GoToIcon";
 
 const NavBar = async () => {
   return (
     <div className="navbar bg-base-200 xl:px-16">
       <div className="flex-1">
         <Link href="/">
-          <Image src={logo} alt="Blogs logo" className="max-w-32 max-h-32"/>
+          <Image src={logo} alt="Blogs logo" className="max-w-32 max-h-32" />
         </Link>
       </div>
       <div className="flex-none gap-1 md:gap-2">

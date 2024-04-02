@@ -120,7 +120,11 @@ export async function GET(req: Request) {
       },
     });
 
-    return NextResponse.json({ status: "success", posts }, { status: 200 });
+    const totalCount = await db.post.count();
+    return NextResponse.json(
+      { status: "success", totalCount, posts },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json(
       {
