@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Tiptap from "./Tiptap";
 import Loader from "../Loader";
-import EditorSkeleton from "../skeleton/EditorSkeleton";
+import { EditorSkeleton } from "../skeleton/Dashboard";
 import * as z from "zod";
 import { ErrorMessage } from "../../ProfileForm";
 import { useSession } from "next-auth/react";

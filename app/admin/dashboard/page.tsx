@@ -13,7 +13,7 @@ const page = async () => {
         <CountCard />
         <LatestBlogsCard />
       </div>
-      <div className="flex justify-center lg:p-6">
+      <div className="flex justify-center lg:px-6 lg:pb-6">
         <ProfileCard />
       </div>
     </div>

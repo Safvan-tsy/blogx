@@ -3,11 +3,11 @@ import React, { FormEvent, useEffect, useState } from "react";
 import { FaEdit, FaPlus, FaSearch, FaTrashAlt } from "react-icons/fa";
 import Link from "next/link";
 import Select from "./ui/Select";
-import BlogListSkeleton from "./ui/skeleton/BlogListSkeleton";
 import { useSession } from "next-auth/react";
 import Pagination from "./ui/Pagination";
 import { Post } from "@prisma/client";
 import AlertModal from "./ui/modal/AlertModal";
+import { BlogListSkeleton } from "./ui/skeleton/Dashboard";
 
 const BlogList: React.FC = () => {
   const { data: userData } = useSession();
@@ -217,10 +217,7 @@ const BlogList: React.FC = () => {
                         </Link>
                       </div>
 
-                      <div
-                        className="tooltip tooltip-bottom"
-                        data-tip="Delete"
-                      >
+                      <div className="tooltip tooltip-bottom" data-tip="Delete">
                         <AlertModal
                           text="Are you sure to delete this Post"
                           onYes={() => onDelete(item.id)}
