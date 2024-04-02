@@ -45,8 +45,9 @@ const LatestBlogsCard: React.FC = () => {
           <div className="flex flex-col gap-2 lg:gap-4 lg:py-5">
             {post?.map((item) => (
               <div
+                key={item.id}
                 className="card md:card-side bg-base-100 shadow-xl border border-base-200
-        hover:bg-base-200 p-2"
+                    hover:bg-base-200 p-2"
               >
                 <figure>
                   <img
