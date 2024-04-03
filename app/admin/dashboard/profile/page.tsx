@@ -1,4 +1,4 @@
-import ProfileForm from "@/app/components/ProfileForm";
+import ProfileForm from "@/app/components/admin/ProfileForm";
 import React from "react";
 
 const page = () => {
