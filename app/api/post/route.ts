@@ -43,8 +43,9 @@ export async function GET(req: Request) {
     });
 
     const totalCount = await db.post.count({ where: query.where });
+    const totalPage = Math.ceil(totalCount / limit);
     return NextResponse.json(
-      { status: "success", totalCount, posts },
+      { status: "success", totalPage, posts },
       { status: 200 }
     );
   } catch (error) {

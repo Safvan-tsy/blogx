@@ -5,8 +5,8 @@ export default function Home() {
   return (
     <>
       <div
-        className="min-h-screen flex flex-col m-auto lg:px-10 lg:py-5 lg:flex-row lg:justify-end 
-      2xl:justify-center gap-10"
+        className="min-h-screen flex flex-col m-auto px-2 pt-3 pb-4 lg:px-10 
+        sm:px-8 sm:pt-4 sm:pb-8 lg:pt-5 lg:pb-10 lg:flex-row lg:justify-center gap-10"
       >
         <div>
           <BlogListView />

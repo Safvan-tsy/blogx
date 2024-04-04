@@ -3,7 +3,8 @@ import React from "react";
 const Pagination: React.FC<{
   currentPage: number;
   onChange: (page: number) => void;
-}> = ({ currentPage, onChange }) => {
+  totalPage?: number;
+}> = ({ currentPage, onChange, totalPage }) => {
   const changePageMinus = () => {
     const page = currentPage - 1;
     onChange(page);
@@ -23,7 +24,11 @@ const Pagination: React.FC<{
         «
       </button>
       <button className="join-item btn">{currentPage}</button>
-      <button className="join-item btn" onClick={changePagePlus}>
+      <button
+        className="join-item btn"
+        onClick={changePagePlus}
+        disabled={totalPage && totalPage == currentPage ? true : false}
+      >
         »
       </button>
     </div>
