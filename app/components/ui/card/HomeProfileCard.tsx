@@ -2,20 +2,17 @@
 import React, { useEffect, useState } from "react";
 import { ProfileCardSkelton } from "../skeleton/Dashboard";
 import { User } from "@prisma/client";
-import { useSession } from "next-auth/react";
 
 const HomeProfileCard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const { data: userData } = useSession();
   const [error, setError] = useState<string>("");
   const [user, setUser] = useState<User>();
 
   const fetchData = async () => {
     try {
       const headers = new Headers();
-      headers.append("Authorization", userData?.user.username || "");
 
-      const response = await fetch(`/api/admin`, {
+      const response = await fetch(`/api/user`, {
         method: "GET",
         headers,
       });
@@ -28,10 +25,8 @@ const HomeProfileCard: React.FC = () => {
   };
 
   useEffect(() => {
-    if (userData?.user) {
-      fetchData();
-    }
-  }, [userData?.user]);
+    fetchData();
+  }, []);
   return (
     <div
       className="card md:flex-row lg:flex-col w-fit sm:w-80 md:w-full lg:w-80 xl:w-96 
