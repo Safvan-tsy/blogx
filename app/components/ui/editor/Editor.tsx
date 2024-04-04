@@ -4,7 +4,7 @@ import Tiptap from "./Tiptap";
 import Loader from "../Loader";
 import { EditorSkeleton } from "../skeleton/Dashboard";
 import * as z from "zod";
-import { ErrorMessage } from "../../ProfileForm";
+import { ErrorMessage } from "../../admin/ProfileForm";
 import { useSession } from "next-auth/react";
 import Select from "../Select";
 import { useRouter } from "next/navigation";

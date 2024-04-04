@@ -34,7 +34,7 @@ export default function RootLayout({
       <body className={`font-sans ${roboto.variable} min-h-screen flex-col`}>
         <Provider>
           <NavBar />
-          <main className="flex-1 ">{children}</main>
+          <main>{children}</main>
           <Footer />
         </Provider>
       </body>

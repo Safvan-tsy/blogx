@@ -2,12 +2,12 @@
 import React, { FormEvent, useEffect, useState } from "react";
 import { FaEdit, FaPlus, FaSearch, FaTrashAlt } from "react-icons/fa";
 import Link from "next/link";
-import Select from "./ui/Select";
+import Select from "../ui/Select";
 import { useSession } from "next-auth/react";
-import Pagination from "./ui/Pagination";
+import Pagination from "../ui/Pagination";
 import { Post } from "@prisma/client";
-import AlertModal from "./ui/modal/AlertModal";
-import { BlogListSkeleton } from "./ui/skeleton/Dashboard";
+import AlertModal from "../ui/modal/AlertModal";
+import { BlogListSkeleton } from "../ui/skeleton/Dashboard";
 
 const BlogList: React.FC = () => {
   const { data: userData } = useSession();
