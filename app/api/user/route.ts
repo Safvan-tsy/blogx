@@ -6,7 +6,11 @@ export async function GET(req: Request) {
     const users = await db.user.findMany();
 
     return NextResponse.json(
-      { status: "success", users: users && users.length > 0 ? true : false },
+      {
+        status: "success",
+        user: users[0],
+        users: users && users.length > 0 ? true : false,
+      },
       { status: 200 }
     );
   } catch (error) {
