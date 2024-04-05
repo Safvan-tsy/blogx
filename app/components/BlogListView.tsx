@@ -3,6 +3,7 @@ import { Post } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import Pagination from "./ui/Pagination";
 import { BlogListViewSkelton } from "./ui/skeleton/Home";
+import Link from "next/link";
 
 const BlogListView = () => {
   const [error, setError] = useState<string>("");
@@ -76,35 +77,37 @@ const BlogListView = () => {
       ) : (
         <>
           {posts.map((item, index) => (
-            <div
-              key={item.id}
-              className={`card ${
-                index !== 0 ? "md:card-side" : ""
-              }  bg-base-100 shadow-xl border border-base-200 hover:bg-base-200 p-2 cursor-pointer`}
-            >
-              <figure>
-                <img
-                  src={item.image ? item.image : ""}
-                  alt="Cover"
-                  className={`mask object-cover object-center w-full rounded-xl
+            <Link href={`/blog/${item.id}`}>
+              <div
+                key={item.id}
+                className={`card ${
+                  index !== 0 ? "md:card-side" : ""
+                }  bg-base-100 shadow-xl border border-base-200 hover:bg-base-200 p-2 cursor-pointer`}
+              >
+                <figure>
+                  <img
+                    src={item.image ? item.image : ""}
+                    alt="Cover"
+                    className={`mask object-cover object-center w-full rounded-xl
               ${
                 index == 0 ? "md:w-full h-60 xl:h-80" : "md:w-40 h-28 md:h-20 "
               }`}
-                />
-              </figure>
-              <div className="card-body">
-                <h2 className="text-lg lg:text-xl font-semibold tracking-wide">
-                  {item.title}
-                </h2>
-                <div className="badge badge-md">
-                  {item.updatedAt.toLocaleDateString("en-US", {
-                    month: "long",
-                    day: "numeric",
-                  })}{" "}
-                  ({calculateTimeDifference(item.updatedAt)})
+                  />
+                </figure>
+                <div className="card-body">
+                  <h2 className="text-lg lg:text-xl font-semibold tracking-wide">
+                    {item.title}
+                  </h2>
+                  <div className="badge badge-md">
+                    {item.updatedAt.toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                    })}{" "}
+                    ({calculateTimeDifference(item.updatedAt)})
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
           <div className="flex justify-center p-2 m-1">
             <Pagination
