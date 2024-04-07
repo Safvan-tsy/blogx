@@ -77,9 +77,8 @@ const BlogListView = () => {
       ) : (
         <>
           {posts.map((item, index) => (
-            <Link href={`/blog/${item.id}`}>
+            <Link key={item.id} href={`/blog/${item.id}`}>
               <div
-                key={item.id}
                 className={`card ${
                   index !== 0 ? "md:card-side" : ""
                 }  bg-base-100 shadow-xl border border-base-200 hover:bg-base-200 p-2 cursor-pointer`}
