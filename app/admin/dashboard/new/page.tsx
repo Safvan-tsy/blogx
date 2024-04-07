@@ -1,4 +1,4 @@
-import Editor from "@/app/components/ui/editor/Editor";
+import Editor from "@/app/components/editor/Editor";
 import React from "react";
 
 const page = () => {

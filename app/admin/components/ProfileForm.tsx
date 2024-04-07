@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect, FormEvent } from "react";
-import Loader from "../ui/Loader";
+import Loader from "../../components/ui/Loader";
 import * as z from "zod";
 import { FaRegEdit } from "react-icons/fa";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import profilePic from "@/public/profile.jpg";
-import { ProfileFormSkeleton } from "../ui/skeleton/Dashboard";
+import { ProfileFormSkeleton } from "../../components/ui/skeleton/Dashboard";
 
 export const ErrorMessage = ({
   text,

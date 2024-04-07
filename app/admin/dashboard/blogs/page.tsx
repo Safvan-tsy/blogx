@@ -1,4 +1,4 @@
-import BlogList from "@/app/components/admin/BlogList";
+import BlogList from "@/app/admin/components/BlogList";
 import React from "react";
 
 const page = () => {

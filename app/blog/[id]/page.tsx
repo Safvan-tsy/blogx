@@ -1,4 +1,4 @@
-import { BlogView } from "@/app/components/BlogView";
+import { BlogView } from "@/app/blog/components/BlogView";
 import HomeProfileCard from "@/app/components/ui/card/HomeProfileCard";
 import React from "react";
 
