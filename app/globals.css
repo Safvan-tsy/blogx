@@ -2,41 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 @layer components {
-    .editor h1 {
-      @apply text-4xl;
-      @apply font-bold;
-    }
-    .editor h2 {
-      @apply text-3xl;
-      @apply font-bold;
-    }
-    .editor h3 {
-      @apply text-2xl;
-      @apply font-bold;
-    }
-    .editor h4 {
-      @apply text-xl;
-      @apply font-semibold;
-    }
-    .editor h5 {
-      @apply text-lg;
-      @apply font-semibold;
-    }
-    .editor h6 {
-      @apply text-sm;
-      @apply font-semibold;
-    }
-    .editor a {
-      @apply text-blue-600 underline;
-    }
-    .editor ul {
-      @apply list-disc;
-    }
-    .editor ol {
-      @apply list-decimal;
-    }
-    .editor blockquote {
-      @apply pl-4;
-      @apply border-l-4 border-gray-600
-    }
+  .editor h1 {
+    @apply text-2xl md:text-3xl lg:text-4xl xl:text-5xl;
+    @apply font-bold;
   }
+  .editor h2 {
+    @apply text-xl md:text-2xl lg:text-3xl xl:text-4xl;
+    @apply font-bold;
+  }
+  .editor h3 {
+    @apply text-lg md:text-xl lg:text-2xl xl:text-3xl;
+    @apply font-semibold;
+  }
+  .editor h4 {
+    @apply text-lg lg:text-xl xl:text-2xl;
+    @apply font-semibold;
+  }
+  .editor h5 {
+    @apply text-lg;
+    @apply font-semibold;
+  }
+  .editor h6 {
+    @apply text-sm;
+    @apply font-semibold;
+  }
+  .editor a {
+    @apply text-blue-600 underline;
+  }
+  .editor ul {
+    @apply list-disc p-2;
+  }
+  .editor ol {
+    @apply list-decimal p-2;
+  }
+  .editor blockquote {
+    @apply pl-4;
+    @apply border-l-4 border-gray-600;
+  }
+  .editor pre {
+    @apply bg-base-100 p-2 shadow-md;
+  }
+  .editor code{
+    @apply flex flex-wrap overflow-x-auto;
+  }
+  .editor p{
+    @apply md:text-lg xl:text-xl
+  }
+}

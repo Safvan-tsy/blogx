@@ -29,7 +29,7 @@ const HomeProfileCard: React.FC = () => {
   }, []);
   return (
     <div
-      className="card md:flex-row lg:flex-col w-fit sm:w-80 md:w-full lg:w-80 xl:w-96 
+      className="card md:flex-row xl:flex-col w-fit sm:w-80 md:w-full lg:w-full xl:w-96 
     bg-base-100 shadow-xl justify-center items-center"
     >
       {isLoading ? (

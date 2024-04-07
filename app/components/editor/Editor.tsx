@@ -191,17 +191,19 @@ const Editor = ({ id }: { id?: number }) => {
                     </label>
                     <div className="flex flex-row flex-wrap lg:flex-col items-center gap-2 md:justify-between lg:items-start">
                       <div className="w-64 carousel ">
-                        <div
-                          className="carousel-item hover:-translate-y-2 group bg-neutral-50 duration-500 
+                        {image != "" && (
+                          <div
+                            className="carousel-item hover:-translate-y-2 group bg-neutral-50 duration-500 
                           h-fit w-fit flex text-neutral-600 flex-col justify-center items-center relative 
                          overflow-hidden shadow-md lg:mt-0 md:h-fit md:w-fit lg:w-fit lg:h-fit"
-                        >
-                          <img
-                            src={image}
-                            alt="cover"
-                            className="w-full object-cover "
-                          />
-                        </div>
+                          >
+                            <img
+                              src={image}
+                              alt="cover"
+                              className="w-full object-cover "
+                            />
+                          </div>
+                        )}
                       </div>
 
                       <input
@@ -209,7 +211,7 @@ const Editor = ({ id }: { id?: number }) => {
                         name="image"
                         value={image}
                         placeholder="paste image link here"
-                        className="border sm:text-sm rounded-lg block w-full p-2.5 max-w-xs"
+                        className="sm:text-sm rounded-lg block w-full p-2.5 max-w-xs outline-none"
                         onChange={(e) => setImage(e.target.value)}
                       />
                     </div>
@@ -222,7 +224,7 @@ const Editor = ({ id }: { id?: number }) => {
                       Title
                     </label>
                     <input
-                      className="border sm:text-sm rounded-lg block w-full p-2.5"
+                      className="sm:text-sm rounded-lg block w-full p-2.5 outline-none"
                       id="title"
                       name="title"
                       type="text"

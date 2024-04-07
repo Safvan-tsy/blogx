@@ -3,6 +3,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Toolbar from "./Toolbar";
 import Underline from "@tiptap/extension-underline";
+import { useEffect } from "react";
 
 const Tiptap: React.FC<{
   onChange: (newContent: string) => void;
@@ -15,17 +16,24 @@ const Tiptap: React.FC<{
     extensions: [StarterKit, Underline],
     editorProps: {
       attributes: {
-        class: "flex flex-col textarea p-2.5 lg:p-5 min-h-[20rem]",
+        class: "flex flex-col border border-gray-700 focus-visible:outline-none p-2.5 lg:p-5 min-h-[20rem]",
       },
     },
     onUpdate: ({ editor }) => {
       handleChange(editor.getHTML());
     },
   });
-
+  useEffect(() => {
+    if (!editor) return;
+    const value = content;
+    if (value) {
+      editor.commands.setContent(value);
+    }
+  }, [editor, content]);
+  
   return (
-    <div className="editor">
-      <Toolbar editor={editor} content={content} />
+    <div className="editor ">
+      <Toolbar editor={editor} />
       <EditorContent style={{ whiteSpace: "pre-line" }} editor={editor} />
     </div>
   );

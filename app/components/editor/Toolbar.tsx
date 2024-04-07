@@ -15,13 +15,13 @@ import {
   FaUnderline,
   FaUndo,
 } from "react-icons/fa";
+import { LuHeading1, LuHeading2, LuHeading3, LuHeading4 } from "react-icons/lu";
 
 type Props = {
   editor: Editor | null;
-  content: string;
 };
 
-const Toolbar = ({ editor, content }: Props) => {
+const Toolbar = ({ editor }: Props) => {
   if (!editor) {
     return null;
   }
@@ -83,20 +83,60 @@ const Toolbar = ({ editor, content }: Props) => {
         >
           <FaStrikethrough className="w-5 h-5" />
         </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleHeading({ level: 2 }).run();
-          }}
-          className={
-            editor.isActive("heading", { level: 2 })
-              ? "bg-sky-700 text-white p-1 rounded-lg"
-              : "text-sky-400"
-          }
-        >
-          <FaHeading className="w-5 h-5" />
-        </button>
-
+        <div className="flex flex-row flex-wrap cursor-pointer shadow-lg border gap-2 p-1 rounded-lg">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleHeading({ level: 1 }).run();
+            }}
+            className={
+              editor.isActive("heading", { level: 1 })
+                ? "bg-sky-700 text-white p-1 rounded-lg"
+                : "text-sky-400"
+            }
+          >
+            <LuHeading1 className="w-5 h-5" />
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleHeading({ level: 2 }).run();
+            }}
+            className={
+              editor.isActive("heading", { level: 2 })
+                ? "bg-sky-700 text-white p-1 rounded-lg"
+                : "text-sky-400"
+            }
+          >
+            <LuHeading2 className="w-5 h-5" />
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleHeading({ level: 3 }).run();
+            }}
+            className={
+              editor.isActive("heading", { level: 3 })
+                ? "bg-sky-700 text-white p-1 rounded-lg"
+                : "text-sky-400"
+            }
+          >
+            <LuHeading3 className="w-5 h-5" />
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleHeading({ level: 4 }).run();
+            }}
+            className={
+              editor.isActive("heading", { level: 4 })
+                ? "bg-sky-700 text-white p-1 rounded-lg"
+                : "text-sky-400"
+            }
+          >
+            <LuHeading4 className="w-5 h-5" />
+          </button>
+        </div>
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -139,10 +179,10 @@ const Toolbar = ({ editor, content }: Props) => {
         <button
           onClick={(e) => {
             e.preventDefault();
-            editor.chain().focus().toggleCode().run();
+            editor.chain().focus().toggleCodeBlock().run();
           }}
           className={
-            editor.isActive("code")
+            editor.isActive("codeBlock")
               ? "bg-sky-700 text-white p-1 rounded-lg"
               : "text-sky-400"
           }

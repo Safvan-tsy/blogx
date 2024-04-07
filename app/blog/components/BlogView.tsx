@@ -61,7 +61,7 @@ export const BlogView: React.FC<{ id: number }> = ({ id }) => {
               )}
               <div className="card-body">
                 <div className="flex flex-col gap-2 xl:pb-10 xl:pt-5">
-                  <h2 className="text-lg lg:text-3xl xl:text-4xl font-semibold tracking-wide">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold">
                     {post.title}
                   </h2>
                   <div className="badge badge-md">
@@ -72,8 +72,8 @@ export const BlogView: React.FC<{ id: number }> = ({ id }) => {
                     ({calculateTimeDifference(post.updatedAt)})
                   </div>
                 </div>
-                <div className="editor">
-                  <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                <div>
+                  <div className="editor flex flex-col gap-2" dangerouslySetInnerHTML={{ __html: post.content }} />
                 </div>
               </div>
             </div>
