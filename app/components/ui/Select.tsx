@@ -16,7 +16,7 @@ const Select = ({ selected, options, onChange, title }: SelectProps) => {
         </div>
       )}
       <select
-        className="select select-bordered"
+        className="select select-bordered outline-none"
         value={selected}
         onChange={(e) => onChange(e.target.value)}
       >
