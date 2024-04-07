@@ -1,6 +1,6 @@
-import CountCard from "@/app/components/ui/card/CountCard";
-import LatestBlogsCard from "@/app/components/ui/card/LatestBlogs";
-import ProfileCard from "@/app/components/ui/card/Profile";
+import CountCard from "@/app/admin/components/CountCard";
+import LatestBlogsCard from "@/app/admin/components/LatestBlogs";
+import ProfileCard from "@/app/admin/components/Profile";
 import React from "react";
 
 const page = async () => {

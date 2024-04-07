@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Tiptap from "./Tiptap";
-import Loader from "../Loader";
-import { EditorSkeleton } from "../skeleton/Dashboard";
+import Loader from "../ui/Loader";
+import { EditorSkeleton } from "../ui/skeleton/Dashboard";
 import * as z from "zod";
-import { ErrorMessage } from "../../admin/ProfileForm";
+import { ErrorMessage } from "../../admin/components/ProfileForm";
 import { useSession } from "next-auth/react";
-import Select from "../Select";
+import Select from "../ui/Select";
 import { useRouter } from "next/navigation";
 
 const Editor = ({ id }: { id?: number }) => {

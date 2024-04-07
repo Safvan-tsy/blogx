@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { CounterCardSkelton } from "../skeleton/Dashboard";
+import { CounterCardSkelton } from "../../components/ui/skeleton/Dashboard";
 import { useSession } from "next-auth/react";
 
 const CountCard: React.FC = () => {

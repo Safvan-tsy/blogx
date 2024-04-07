@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { ProfileCardSkelton } from "../skeleton/Dashboard";
+import { ProfileCardSkelton } from "../../components/ui/skeleton/Dashboard";
 import { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 

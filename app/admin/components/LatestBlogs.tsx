@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { LatestBlogSkelton } from "../skeleton/Dashboard";
+import { LatestBlogSkelton } from "../../components/ui/skeleton/Dashboard";
 import { useSession } from "next-auth/react";
 import { Post } from "@prisma/client";
 
