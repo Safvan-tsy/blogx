@@ -42,11 +42,13 @@ const ProfileCard: React.FC = () => {
       ) : (
         <>
           <figure className="px-10 pt-10 md:px-4 md:pt-0 xl:px-10 xl:pt-10 xl:w-64 xl:h-64">
-            <img
-              src={user?.image ? user.image : ""}
-              alt="user"
-              className="mask mask-squircle object-cover object-center"
-            />
+            {user?.image && (
+              <img
+                src={user?.image}
+                alt="user"
+                className="mask mask-squircle object-cover object-center"
+              />
+            )}
           </figure>
           <div className="card-body items-center text-center">
             <h2 className="card-title">

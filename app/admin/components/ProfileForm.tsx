@@ -171,7 +171,7 @@ const ProfileForm: React.FC = () => {
                         Username
                       </label>
                       <input
-                        className="border sm:text-sm rounded-lg block w-full p-2.5 "
+                        className="sm:text-sm rounded-lg block w-full p-2.5 "
                         id="username"
                         name="username"
                         type="text"
@@ -188,7 +188,7 @@ const ProfileForm: React.FC = () => {
                         Email
                       </label>
                       <input
-                        className="border sm:text-sm rounded-lg block w-full p-2.5 "
+                        className="sm:text-sm rounded-lg block w-full p-2.5 "
                         id="email"
                         name="email"
                         type="email"
@@ -205,7 +205,7 @@ const ProfileForm: React.FC = () => {
                         About
                       </label>
                       <textarea
-                        className="border sm:text-sm rounded-lg block w-full p-2.5 h-32"
+                        className="sm:text-sm rounded-lg block w-full p-2.5 h-32"
                         id="about"
                         name="about"
                         value={about}
@@ -223,7 +223,7 @@ const ProfileForm: React.FC = () => {
                         Full Name
                       </label>
                       <input
-                        className="border sm:text-sm rounded-lg block w-full p-2.5 "
+                        className="sm:text-sm rounded-lg block w-full p-2.5 "
                         id="fullName"
                         name="fullName"
                         type="text"
@@ -246,15 +246,9 @@ const ProfileForm: React.FC = () => {
                             h-fit w-fit flex text-neutral-600 flex-col justify-center items-center relative 
                           rounded-xl overflow-hidden shadow-md lg:mt-0 md:h-fit md:w-fit lg:w-fit lg:h-fit"
                           >
-                            {image ? (
+                            {image && (
                               <img
                                 src={image}
-                                alt="profile pic"
-                                className="w-full object-cover "
-                              />
-                            ) : (
-                              <Image
-                                src={profilePic}
                                 alt="profile pic"
                                 className="w-full object-cover "
                               />
@@ -267,7 +261,7 @@ const ProfileForm: React.FC = () => {
                             name="image"
                             value={image}
                             placeholder="paste image link here"
-                            className="border sm:text-sm rounded-lg block w-full p-2.5 max-w-xs"
+                            className="sm:text-sm rounded-lg block w-full p-2.5 max-w-xs"
                             disabled={editMode ? false : true}
                             onChange={(e) => setImage(e.target.value)}
                           />

@@ -50,11 +50,13 @@ const LatestBlogsCard: React.FC = () => {
                     hover:bg-base-200 p-2"
               >
                 <figure>
-                  <img
-                    src={item.image ? item.image : ""}
-                    alt="Cover"
-                    className="mask object-cover object-center w-full md:w-40 h-28 md:h-20 rounded-xl"
-                  />
+                  {item.image && (
+                    <img
+                      src={item.image}
+                      alt="Cover"
+                      className="mask object-cover object-center w-full md:w-40 h-28 md:h-20 rounded-xl"
+                    />
+                  )}
                 </figure>
                 <div className="card-body">
                   <h2 className="text-lg lg:text-xl font-semibold tracking-wide">

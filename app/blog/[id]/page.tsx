@@ -9,7 +9,7 @@ const page: React.FC<{ params: any }> = ({ params }) => {
         className="min-h-screen flex flex-col m-auto px-2 pt-3 pb-4 lg:px-10 
             sm:px-8 sm:pt-4 sm:pb-8 lg:pt-5 lg:pb-10 xl:flex-row justify-center gap-10"
       >
-        <div>
+        <div className="xl:w-[50rem]">
           <BlogView id={params.id} />
         </div>
         <div>

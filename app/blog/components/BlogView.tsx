@@ -42,13 +42,13 @@ export const BlogView: React.FC<{ id: number }> = ({ id }) => {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 max-w-full">
       {isLoading ? (
         <BlogViewSkelton />
       ) : (
         <>
           {post && (
-            <div className="card shadow-xl border border-base-200 bg-base-200 p-2">
+            <div className="card card-compact shadow-xl border border-base-200 bg-base-200 p-2">
               {post.image && (
                 <figure>
                   <img
@@ -61,7 +61,7 @@ export const BlogView: React.FC<{ id: number }> = ({ id }) => {
               )}
               <div className="card-body">
                 <div className="flex flex-col gap-2 xl:pb-10 xl:pt-5">
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl xl:lead-[3rem] font-semibold">
                     {post.title}
                   </h2>
                   <div className="badge badge-md">

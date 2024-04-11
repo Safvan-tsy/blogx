@@ -184,11 +184,13 @@ const BlogList: React.FC = () => {
                   <td>
                     <div className="avatar">
                       <div className="w-36 h-16">
-                        <img
-                          src={item.image ? item.image : ""}
-                          alt="Cover"
-                          className="max-w-36 max-h-16"
-                        />
+                        {item.image && (
+                          <img
+                            src={item.image}
+                            alt="Cover"
+                            className="max-w-36 max-h-16"
+                          />
+                        )}
                       </div>
                     </div>
                     {/* /// label /// <br />
