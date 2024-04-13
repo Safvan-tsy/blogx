@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  output: 'standalone', //to support docker
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
