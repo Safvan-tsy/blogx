@@ -1,5 +1,5 @@
-import React from "react";
-import { FaTrashAlt } from "react-icons/fa";
+import React from 'react';
+import { FaTrashAlt } from 'react-icons/fa';
 
 interface AlertModalProps {
   text: string;
@@ -12,9 +12,7 @@ const AlertModal: React.FC<AlertModalProps> = ({ text, onYes }) => {
       <button
         className="btn btn-sm"
         onClick={() => {
-          const modal = document.getElementById(
-            "alert_modal"
-          ) as HTMLDialogElement;
+          const modal = document.getElementById('alert_modal') as HTMLDialogElement;
           if (modal) {
             modal.showModal();
           }
@@ -24,7 +22,7 @@ const AlertModal: React.FC<AlertModalProps> = ({ text, onYes }) => {
       </button>
       <dialog id="alert_modal" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Hello!</h3>
+          <h3 className="text-lg font-bold">Hello!</h3>
           <p className="py-4">{text}</p>
           <div className="modal-action">
             <form method="dialog" className="flex gap-2">

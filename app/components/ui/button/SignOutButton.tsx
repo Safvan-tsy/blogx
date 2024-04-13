@@ -1,7 +1,7 @@
-"use client";
-import { signOut } from "next-auth/react";
-import React from "react";
-import { FaSignOutAlt } from "react-icons/fa";
+'use client';
+import { signOut } from 'next-auth/react';
+import React from 'react';
+import { FaSignOutAlt } from 'react-icons/fa';
 
 const SignOutButton = () => {
   return (
@@ -12,7 +12,7 @@ const SignOutButton = () => {
           callbackUrl: `${window.location.origin}/login`,
         })
       }
-      className="w-full focus:ring-4 focus:outline-none rounded-lg text-sm  lg:text-lg"
+      className="w-full rounded-lg text-sm focus:outline-none focus:ring-4  lg:text-lg"
       type="submit"
     >
       <FaSignOutAlt /> Sign out

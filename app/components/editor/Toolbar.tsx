@@ -1,11 +1,10 @@
-"use client";
+'use client';
 
-import React from "react";
-import { type Editor } from "@tiptap/react";
+import React from 'react';
+import { type Editor } from '@tiptap/react';
 import {
   FaBold,
   FaCode,
-  FaHeading,
   FaItalic,
   FaList,
   FaListOl,
@@ -14,8 +13,8 @@ import {
   FaStrikethrough,
   FaUnderline,
   FaUndo,
-} from "react-icons/fa";
-import { LuHeading1, LuHeading2, LuHeading3, LuHeading4 } from "react-icons/lu";
+} from 'react-icons/fa';
+import { LuHeading1, LuHeading2, LuHeading3, LuHeading4 } from 'react-icons/lu';
 
 type Props = {
   editor: Editor | null;
@@ -27,22 +26,20 @@ const Toolbar = ({ editor }: Props) => {
   }
   return (
     <div
-      className="px-4 py-3 rounded-tl-md rounded-tr-md flex justify-between items-start
-    gap-3 w-full flex-wrap border border-gray-700"
+      className="flex w-full flex-wrap items-start justify-between gap-3 rounded-tl-md
+    rounded-tr-md border border-gray-700 px-4 py-3"
     >
-      <div className="flex justify-start items-center gap-3 lg:gap-5 w-full lg:w-10/12 flex-wrap ">
+      <div className="flex w-full flex-wrap items-center justify-start gap-3 lg:w-10/12 lg:gap-5 ">
         <button
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleBold().run();
           }}
           className={
-            editor.isActive("bold")
-              ? "bg-sky-700 text-white p-1 rounded-lg"
-              : "text-sky-400"
+            editor.isActive('bold') ? 'rounded-lg bg-sky-700 p-1 text-white' : 'text-sky-400'
           }
         >
-          <FaBold className="w-5 h-5" />
+          <FaBold className="h-5 w-5" />
         </button>
         <button
           onClick={(e) => {
@@ -50,12 +47,10 @@ const Toolbar = ({ editor }: Props) => {
             editor.chain().focus().toggleItalic().run();
           }}
           className={
-            editor.isActive("italic")
-              ? "bg-sky-700 text-white p-1 rounded-lg"
-              : "text-sky-400"
+            editor.isActive('italic') ? 'rounded-lg bg-sky-700 p-1 text-white' : 'text-sky-400'
           }
         >
-          <FaItalic className="w-5 h-5" />
+          <FaItalic className="h-5 w-5" />
         </button>
         <button
           onClick={(e) => {
@@ -63,12 +58,10 @@ const Toolbar = ({ editor }: Props) => {
             editor.chain().focus().toggleUnderline().run();
           }}
           className={
-            editor.isActive("underline")
-              ? "bg-sky-700 text-white p-1 rounded-lg"
-              : "text-sky-400"
+            editor.isActive('underline') ? 'rounded-lg bg-sky-700 p-1 text-white' : 'text-sky-400'
           }
         >
-          <FaUnderline className="w-5 h-5" />
+          <FaUnderline className="h-5 w-5" />
         </button>
         <button
           onClick={(e) => {
@@ -76,26 +69,24 @@ const Toolbar = ({ editor }: Props) => {
             editor.chain().focus().toggleStrike().run();
           }}
           className={
-            editor.isActive("strike")
-              ? "bg-sky-700 text-white p-1 rounded-lg"
-              : "text-sky-400"
+            editor.isActive('strike') ? 'rounded-lg bg-sky-700 p-1 text-white' : 'text-sky-400'
           }
         >
-          <FaStrikethrough className="w-5 h-5" />
+          <FaStrikethrough className="h-5 w-5" />
         </button>
-        <div className="flex flex-row flex-wrap cursor-pointer shadow-lg border gap-2 p-1 rounded-lg">
+        <div className="flex cursor-pointer flex-row flex-wrap gap-2 rounded-lg border p-1 shadow-lg">
           <button
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().toggleHeading({ level: 1 }).run();
             }}
             className={
-              editor.isActive("heading", { level: 1 })
-                ? "bg-sky-700 text-white p-1 rounded-lg"
-                : "text-sky-400"
+              editor.isActive('heading', { level: 1 })
+                ? 'rounded-lg bg-sky-700 p-1 text-white'
+                : 'text-sky-400'
             }
           >
-            <LuHeading1 className="w-5 h-5" />
+            <LuHeading1 className="h-5 w-5" />
           </button>
           <button
             onClick={(e) => {
@@ -103,12 +94,12 @@ const Toolbar = ({ editor }: Props) => {
               editor.chain().focus().toggleHeading({ level: 2 }).run();
             }}
             className={
-              editor.isActive("heading", { level: 2 })
-                ? "bg-sky-700 text-white p-1 rounded-lg"
-                : "text-sky-400"
+              editor.isActive('heading', { level: 2 })
+                ? 'rounded-lg bg-sky-700 p-1 text-white'
+                : 'text-sky-400'
             }
           >
-            <LuHeading2 className="w-5 h-5" />
+            <LuHeading2 className="h-5 w-5" />
           </button>
           <button
             onClick={(e) => {
@@ -116,12 +107,12 @@ const Toolbar = ({ editor }: Props) => {
               editor.chain().focus().toggleHeading({ level: 3 }).run();
             }}
             className={
-              editor.isActive("heading", { level: 3 })
-                ? "bg-sky-700 text-white p-1 rounded-lg"
-                : "text-sky-400"
+              editor.isActive('heading', { level: 3 })
+                ? 'rounded-lg bg-sky-700 p-1 text-white'
+                : 'text-sky-400'
             }
           >
-            <LuHeading3 className="w-5 h-5" />
+            <LuHeading3 className="h-5 w-5" />
           </button>
           <button
             onClick={(e) => {
@@ -129,12 +120,12 @@ const Toolbar = ({ editor }: Props) => {
               editor.chain().focus().toggleHeading({ level: 4 }).run();
             }}
             className={
-              editor.isActive("heading", { level: 4 })
-                ? "bg-sky-700 text-white p-1 rounded-lg"
-                : "text-sky-400"
+              editor.isActive('heading', { level: 4 })
+                ? 'rounded-lg bg-sky-700 p-1 text-white'
+                : 'text-sky-400'
             }
           >
-            <LuHeading4 className="w-5 h-5" />
+            <LuHeading4 className="h-5 w-5" />
           </button>
         </div>
         <button
@@ -143,12 +134,10 @@ const Toolbar = ({ editor }: Props) => {
             editor.chain().focus().toggleBulletList().run();
           }}
           className={
-            editor.isActive("bulletList")
-              ? "bg-sky-700 text-white p-1 rounded-lg"
-              : "text-sky-400"
+            editor.isActive('bulletList') ? 'rounded-lg bg-sky-700 p-1 text-white' : 'text-sky-400'
           }
         >
-          <FaList className="w-5 h-5" />
+          <FaList className="h-5 w-5" />
         </button>
         <button
           onClick={(e) => {
@@ -156,12 +145,10 @@ const Toolbar = ({ editor }: Props) => {
             editor.chain().focus().toggleOrderedList().run();
           }}
           className={
-            editor.isActive("orderedList")
-              ? "bg-sky-700 text-white p-1 rounded-lg"
-              : "text-sky-400"
+            editor.isActive('orderedList') ? 'rounded-lg bg-sky-700 p-1 text-white' : 'text-sky-400'
           }
         >
-          <FaListOl className="w-5 h-5" />
+          <FaListOl className="h-5 w-5" />
         </button>
         <button
           onClick={(e) => {
@@ -169,12 +156,10 @@ const Toolbar = ({ editor }: Props) => {
             editor.chain().focus().toggleBlockquote().run();
           }}
           className={
-            editor.isActive("blockquote")
-              ? "bg-sky-700 text-white p-1 rounded-lg"
-              : "text-sky-400"
+            editor.isActive('blockquote') ? 'rounded-lg bg-sky-700 p-1 text-white' : 'text-sky-400'
           }
         >
-          <FaQuoteLeft className="w-5 h-5" />
+          <FaQuoteLeft className="h-5 w-5" />
         </button>
         <button
           onClick={(e) => {
@@ -182,12 +167,10 @@ const Toolbar = ({ editor }: Props) => {
             editor.chain().focus().toggleCodeBlock().run();
           }}
           className={
-            editor.isActive("codeBlock")
-              ? "bg-sky-700 text-white p-1 rounded-lg"
-              : "text-sky-400"
+            editor.isActive('codeBlock') ? 'rounded-lg bg-sky-700 p-1 text-white' : 'text-sky-400'
           }
         >
-          <FaCode className="w-5 h-5" />
+          <FaCode className="h-5 w-5" />
         </button>
         <button
           onClick={(e) => {
@@ -195,12 +178,12 @@ const Toolbar = ({ editor }: Props) => {
             editor.chain().focus().undo().run();
           }}
           className={
-            editor.isActive("undo")
-              ? "bg-sky-700 text-white p-1 rounded-lg"
-              : "text-sky-400 hover:bg-sky-700 hover:text-white p-1 hover:rounded-lg"
+            editor.isActive('undo')
+              ? 'rounded-lg bg-sky-700 p-1 text-white'
+              : 'p-1 text-sky-400 hover:rounded-lg hover:bg-sky-700 hover:text-white'
           }
         >
-          <FaUndo className="w-5 h-5" />
+          <FaUndo className="h-5 w-5" />
         </button>
         <button
           onClick={(e) => {
@@ -208,12 +191,12 @@ const Toolbar = ({ editor }: Props) => {
             editor.chain().focus().redo().run();
           }}
           className={
-            editor.isActive("redo")
-              ? "bg-sky-700 text-white p-1 rounded-lg"
-              : "text-sky-400 hover:bg-sky-700 hover:text-white p-1 hover:rounded-lg"
+            editor.isActive('redo')
+              ? 'rounded-lg bg-sky-700 p-1 text-white'
+              : 'p-1 text-sky-400 hover:rounded-lg hover:bg-sky-700 hover:text-white'
           }
         >
-          <FaRedo className="w-5 h-5" />
+          <FaRedo className="h-5 w-5" />
         </button>
       </div>
       {/* {content && (

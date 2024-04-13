@@ -1,15 +1,15 @@
-import { BlogView } from "@/app/blog/components/BlogView";
-import HomeProfileCard from "@/app/components/ui/card/HomeProfileCard";
-import React from "react";
+import React from 'react';
+import { BlogView } from '@/app/blog/components/BlogView';
+import HomeProfileCard from '@/app/components/ui/card/HomeProfileCard';
 
 const page: React.FC<{ params: any }> = ({ params }) => {
   return (
     <>
       <div
-        className="min-h-screen flex flex-col m-auto px-2 pt-3 pb-4 lg:px-10 
-            sm:px-8 sm:pt-4 sm:pb-8 lg:pt-5 lg:pb-10 xl:flex-row justify-center gap-10"
+        className="m-auto flex min-h-screen flex-col justify-center gap-10 px-2 pb-4 
+            pt-3 sm:px-8 sm:pb-8 sm:pt-4 lg:px-10 lg:pb-10 lg:pt-5 xl:flex-row"
       >
-        <div>
+        <div className="xl:w-[50rem]">
           <BlogView id={params.id} />
         </div>
         <div>

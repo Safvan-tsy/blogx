@@ -1,17 +1,12 @@
-import { FiSun, FiMoon } from "react-icons/fi";
-import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
-import Image from "next/image";
-
 export default function ThemeSwitch() {
   return (
-    <label className="swap swap-rotate w-fit h-fit">
+    <label className="swap swap-rotate h-fit w-fit">
       {/* this hidden checkbox controls the state */}
       <input type="checkbox" className="theme-controller" value="retro" />
 
       {/* sun icon */}
       <svg
-        className="swap-off fill-current w-8 h-8"
+        className="swap-off h-8 w-8 fill-current"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
@@ -20,7 +15,7 @@ export default function ThemeSwitch() {
 
       {/* moon icon */}
       <svg
-        className="swap-on fill-current w-8 h-8"
+        className="swap-on h-8 w-8 fill-current"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >

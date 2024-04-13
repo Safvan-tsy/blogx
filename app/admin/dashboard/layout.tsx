@@ -1,7 +1,7 @@
-import AdminNav, { Swap } from "@/app/components/ui/nav/AdminNav";
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import { authOptions } from '@/lib/auth';
+import AdminNav, { Swap } from '@/app/components/ui/nav/AdminNav';
 
 export default async function DashboardLayout({
   children, // will be a page or nested layout
@@ -29,6 +29,6 @@ export default async function DashboardLayout({
       </section>
     );
   } else {
-    redirect("/login");
+    redirect('/login');
   }
 }

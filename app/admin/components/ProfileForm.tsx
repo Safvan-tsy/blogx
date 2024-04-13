@@ -1,59 +1,52 @@
-"use client";
-import React, { useState, useEffect, FormEvent } from "react";
-import Loader from "../../components/ui/Loader";
-import * as z from "zod";
-import { FaRegEdit } from "react-icons/fa";
-import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
-import profilePic from "@/public/profile.jpg";
-import { ProfileFormSkeleton } from "../../components/ui/skeleton/Dashboard";
+'use client';
+import React, { FormEvent, useEffect, useState } from 'react';
+import * as z from 'zod';
+import { FaRegEdit } from 'react-icons/fa';
+import { signOut, useSession } from 'next-auth/react';
+import Loader from '@/app/components/ui/Loader';
+import { ProfileFormSkeleton } from '@/app/components/ui/skeleton/Dashboard';
 
-export const ErrorMessage = ({
-  text,
-  classes,
-}: {
-  text: string;
-  classes?: string;
-}) => {
+export const ErrorMessage = ({ text, classes }: { text: string; classes?: string }) => {
   return <p className={`text-sm text-red-500 ${classes}`}>{text}</p>;
 };
 
 const ProfileForm: React.FC = () => {
   const { data: userData } = useSession();
   const [editMode, setEditMode] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [username, setUsername] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [about, setAbout] = useState("");
-  const [email, setEmail] = useState("");
-  const [image, setImage] = useState("");
+  const [username, setUsername] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [about, setAbout] = useState('');
+  const [email, setEmail] = useState('');
+  const [image, setImage] = useState('');
   const [validationErrors, setValidationErrors] = useState({
-    username: "",
-    email: "",
-    fullName: "",
-    about: "",
-    image: "",
+    username: '',
+    email: '',
+    fullName: '',
+    about: '',
+    image: '',
   });
 
   const fetchData = async () => {
     try {
       const headers = new Headers();
-      headers.append("Authorization", userData?.user.username || "");
+      headers.append('Authorization', userData?.user.username || '');
 
       const response = await fetch(`/api/admin`, {
-        method: "GET",
+        method: 'GET',
         headers,
       });
       const data = await response.json();
       setEditMode(false);
       setUsername(data.user.username);
       setEmail(data.user.email);
-      setAbout(data.user.about || "");
-      setFullName(data.user.fullName || "");
-      setImage(data.user.image || "");
+      setAbout(data.user.about || '');
+      setFullName(data.user.fullName || '');
+      setImage(data.user.image || '');
     } catch (error) {
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -65,11 +58,8 @@ const ProfileForm: React.FC = () => {
   }, [userData?.user]);
 
   const userSchema = z.object({
-    username: z
-      .string()
-      .min(1, "Username is required")
-      .max(20, "maximum 20 characters only"),
-    email: z.string().min(1, "Email is required").email("Invalid email"),
+    username: z.string().min(1, 'Username is required').max(20, 'maximum 20 characters only'),
+    email: z.string().min(1, 'Email is required').email('Invalid email'),
     fullName: z.string(),
     image: z.string(),
   });
@@ -77,20 +67,20 @@ const ProfileForm: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = {
-      username: username,
-      email: email,
-      fullName: fullName,
-      about: about,
-      image: image,
+      username,
+      email,
+      fullName,
+      about,
+      image,
     };
     try {
-      const validated = userSchema.parse(formData);
+      userSchema.parse(formData);
       setValidationErrors({
-        username: "",
-        email: "",
-        fullName: "",
-        about: "",
-        image: "",
+        username: '',
+        email: '',
+        fullName: '',
+        about: '',
+        image: '',
       });
     } catch (error: any) {
       console.log(error);
@@ -99,11 +89,11 @@ const ProfileForm: React.FC = () => {
         validationErrorMessages[err.path[0]] = err.message;
       });
       setValidationErrors({
-        username: validationErrorMessages["username"] || "",
-        email: validationErrorMessages["email"] || "",
-        fullName: validationErrorMessages["fullName"] || "",
-        about: validationErrorMessages["about"] || "",
-        image: validationErrorMessages["image"] || "",
+        username: validationErrorMessages['username'] || '',
+        email: validationErrorMessages['email'] || '',
+        fullName: validationErrorMessages['fullName'] || '',
+        about: validationErrorMessages['about'] || '',
+        image: validationErrorMessages['image'] || '',
       });
       return;
     }
@@ -112,12 +102,12 @@ const ProfileForm: React.FC = () => {
       setSubmitLoading(true);
       const data = JSON.stringify(formData);
       const headers = new Headers();
-      headers.append("Content-Type", "application/json");
-      headers.append("Authorization", userData?.user.username || "");
+      headers.append('Content-Type', 'application/json');
+      headers.append('Authorization', userData?.user.username || '');
 
       const response = await fetch(`/api/admin`, {
-        method: "PUT",
-        headers: headers,
+        method: 'PUT',
+        headers,
         body: data,
       });
       if (response.ok) {
@@ -136,42 +126,34 @@ const ProfileForm: React.FC = () => {
       fetchData();
     } catch (error: any) {
       console.log(error);
-      setError("something went wrong");
+      setError('something went wrong');
       setSubmitLoading(false);
     }
   };
 
   return (
     <div className="relative xl:p-1">
-      <div className="absolute top-0 right-0">
-        <div
-          className="tooltip tooltip-bottom cursor-pointer"
-          data-tip="Edit profile"
-        >
-          <FaRegEdit
-            className="w-6 h-6 xl:w-7 xl:h-7"
-            onClick={() => setEditMode(!editMode)}
-          />
+      <div className="absolute right-0 top-0">
+        <div className="tooltip tooltip-bottom cursor-pointer" data-tip="Edit profile">
+          <FaRegEdit className="h-6 w-6 xl:h-7 xl:w-7" onClick={() => setEditMode(!editMode)} />
         </div>
       </div>
-      <p className="text-xl font-bold leading-tight tracking-tight md:text-2xl flex justify-center">
+      <p className="flex justify-center text-xl font-bold leading-tight tracking-tight md:text-2xl">
         Hello {userData?.user.username} 👋
       </p>
       {isLoading ? (
         <ProfileFormSkeleton />
       ) : (
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto ">
+          <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 ">
             <div className="w-full ">
               <div className="">
                 <div className="grid grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 xl:gap-4">
                   <div>
                     <div className="p-2">
-                      <label className="block mb-2 text-sm font-medium">
-                        Username
-                      </label>
+                      <label className="mb-2 block text-sm font-medium">Username</label>
                       <input
-                        className="border sm:text-sm rounded-lg block w-full p-2.5 "
+                        className="block w-full rounded-lg p-2.5 sm:text-sm "
                         id="username"
                         name="username"
                         type="text"
@@ -179,16 +161,14 @@ const ProfileForm: React.FC = () => {
                         disabled={editMode ? false : true}
                         onChange={(e) => setUsername(e.target.value)}
                       />
-                      {validationErrors.username != "" && (
+                      {validationErrors.username != '' && (
                         <ErrorMessage text={validationErrors.username} />
                       )}
                     </div>
                     <div className="p-2">
-                      <label className="block mb-2 text-sm font-medium">
-                        Email
-                      </label>
+                      <label className="mb-2 block text-sm font-medium">Email</label>
                       <input
-                        className="border sm:text-sm rounded-lg block w-full p-2.5 "
+                        className="block w-full rounded-lg p-2.5 sm:text-sm "
                         id="email"
                         name="email"
                         type="email"
@@ -196,34 +176,30 @@ const ProfileForm: React.FC = () => {
                         disabled={editMode ? false : true}
                         onChange={(e) => setEmail(e.target.value)}
                       />
-                      {validationErrors.email != "" && (
+                      {validationErrors.email != '' && (
                         <ErrorMessage text={validationErrors.email} />
                       )}
                     </div>
                     <div className="p-2 ">
-                      <label className="block mb-2 text-sm font-medium">
-                        About
-                      </label>
+                      <label className="mb-2 block text-sm font-medium">About</label>
                       <textarea
-                        className="border sm:text-sm rounded-lg block w-full p-2.5 h-32"
+                        className="block h-32 w-full rounded-lg p-2.5 sm:text-sm"
                         id="about"
                         name="about"
                         value={about}
                         disabled={editMode ? false : true}
                         onChange={(e) => setAbout(e.target.value)}
                       />
-                      {validationErrors.about != "" && (
+                      {validationErrors.about != '' && (
                         <ErrorMessage text={validationErrors.about} />
                       )}
                     </div>
                   </div>
                   <div>
                     <div className="p-2">
-                      <label className="block mb-2 text-sm font-medium">
-                        Full Name
-                      </label>
+                      <label className="mb-2 block text-sm font-medium">Full Name</label>
                       <input
-                        className="border sm:text-sm rounded-lg block w-full p-2.5 "
+                        className="block w-full rounded-lg p-2.5 sm:text-sm "
                         id="fullName"
                         name="fullName"
                         type="text"
@@ -231,33 +207,21 @@ const ProfileForm: React.FC = () => {
                         disabled={editMode ? false : true}
                         onChange={(e) => setFullName(e.target.value)}
                       />
-                      {validationErrors.fullName != "" && (
+                      {validationErrors.fullName != '' && (
                         <ErrorMessage text={validationErrors.fullName} />
                       )}
                     </div>
                     <div className="p-2">
-                      <label className="block mb-2 text-sm font-medium">
-                        Profile
-                      </label>
-                      <div className="flex flex-row flex-wrap lg:flex-col items-center gap-2 md:justify-between lg:items-start">
-                        <div className="w-64 carousel rounded-badge">
+                      <label className="mb-2 block text-sm font-medium">Profile</label>
+                      <div className="flex flex-row flex-wrap items-center gap-2 md:justify-between lg:flex-col lg:items-start">
+                        <div className="carousel w-64 rounded-badge">
                           <div
-                            className="carousel-item hover:-translate-y-2 group bg-neutral-50 duration-500 
-                            h-fit w-fit flex text-neutral-600 flex-col justify-center items-center relative 
-                          rounded-xl overflow-hidden shadow-md lg:mt-0 md:h-fit md:w-fit lg:w-fit lg:h-fit"
+                            className="group carousel-item relative flex h-fit 
+                            w-fit flex-col items-center justify-center overflow-hidden rounded-xl bg-neutral-50 text-neutral-600 
+                          shadow-md duration-500 hover:-translate-y-2 md:h-fit md:w-fit lg:mt-0 lg:h-fit lg:w-fit"
                           >
-                            {image ? (
-                              <img
-                                src={image}
-                                alt="profile pic"
-                                className="w-full object-cover "
-                              />
-                            ) : (
-                              <Image
-                                src={profilePic}
-                                alt="profile pic"
-                                className="w-full object-cover "
-                              />
+                            {image && (
+                              <img src={image} alt="profile pic" className="w-full object-cover " />
                             )}
                           </div>
                         </div>
@@ -267,34 +231,32 @@ const ProfileForm: React.FC = () => {
                             name="image"
                             value={image}
                             placeholder="paste image link here"
-                            className="border sm:text-sm rounded-lg block w-full p-2.5 max-w-xs"
+                            className="block w-full max-w-xs rounded-lg p-2.5 sm:text-sm"
                             disabled={editMode ? false : true}
                             onChange={(e) => setImage(e.target.value)}
                           />
                         )}
                       </div>
-                      {validationErrors.image != "" && (
+                      {validationErrors.image != '' && (
                         <ErrorMessage text={validationErrors.image} />
                       )}
                     </div>
                   </div>
                 </div>
                 {editMode && (
-                  <div className="w-full mt-4 pt-2 md:mt-1 lg:mt-4">
+                  <div className="mt-4 w-full pt-2 md:mt-1 lg:mt-4">
                     {submitLoading ? (
                       <Loader />
                     ) : (
                       <button
-                        className="w-full bg-base-100 hover:bg-base-300 focus:ring-4 focus:outline-none
-                         focus:ring-base-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-base-600 "
+                        className="focus:ring-base-600 w-full rounded-lg bg-base-100 px-5
+                         py-2.5 text-center text-sm font-medium hover:bg-base-300 focus:outline-none focus:ring-4 focus:ring-base-300 "
                         type="submit"
                       >
                         Submit
                       </button>
                     )}
-                    {error && (
-                      <ErrorMessage text={error} classes="text-center" />
-                    )}
+                    {error && <ErrorMessage text={error} classes="text-center" />}
                   </div>
                 )}
               </div>
