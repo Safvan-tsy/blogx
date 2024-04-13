@@ -1,6 +1,17 @@
 <h1 align='center'>Blogx</h1>
 
-## Setup Procedure
+The Blogx Website has been built with the following tech stack:
+
+-   [Nextjs](https://nextjs.org/)
+-   [Tailwind](https://tailwindcss.com/)
+-   [daisyui](https://daisyui.com/)
+-   [Prisma](https://www.prisma.io/)
+-   [Postgresql](https://www.postgresql.org/)
+
+
+## Development
+
+# Setup Procedure
 
 - Docker
 
@@ -11,7 +22,7 @@
 - Replace the DATABASE_URL in .env
 - Run `npx prisma migrate dev` to setup schema
 
-## Steps to run locally
+# Steps to run locally
 
 With Docker
 
@@ -22,8 +33,6 @@ Without Docker
 - `npm install`
 - `npm run db:seed` to seed the database
 - `npm run dev`
-- Login using any userid and password 123456
-- You should be able to see some test courses
 
 ---
 
