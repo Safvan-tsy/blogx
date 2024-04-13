@@ -1,5 +1,5 @@
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { NAV_URL } from "../utils/constants";
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { NAV_URL } from '../utils/constants';
 
 export async function fetchUserData() {
   try {
@@ -7,7 +7,7 @@ export async function fetchUserData() {
     const data = await response.json();
     return data.users;
   } catch (error) {
-    console.error("Error fetching user data:", error);
+    console.error('Error fetching user data:', error);
     return null;
   }
 }

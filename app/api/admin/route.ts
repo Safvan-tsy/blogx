@@ -1,50 +1,47 @@
-import { db } from "@/lib/db";
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import { db } from '@/lib/db';
 
 export async function GET(req: Request) {
   try {
-    const token = req.headers.get("Authorization");
+    const token = req.headers.get('Authorization');
     if (!token)
       return NextResponse.json(
         {
-          message: "Invalid User",
+          message: 'Invalid User',
         },
-        { status: 403 }
+        { status: 403 },
       );
 
     const user = await db.user.findUnique({ where: { username: token } });
 
-    return NextResponse.json(
-      { status: "success", user: user },
-      { status: 200 }
-    );
+    return NextResponse.json({ status: 'success', user }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       {
-        message: "Something went wrong",
+        message: 'Something went wrong',
         error,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 export async function PUT(req: Request) {
   try {
-    const token = req.headers.get("Authorization");
+    const token = req.headers.get('Authorization');
     if (!token)
       return NextResponse.json(
         {
-          message: "Invalid User",
+          message: 'Invalid User',
         },
-        { status: 403 }
+        { status: 403 },
       );
     const user = await db.user.findUnique({ where: { username: token } });
     if (!user)
       return NextResponse.json(
         {
-          message: "No user found with that token",
+          message: 'No user found with that token',
         },
-        { status: 404 }
+        { status: 404 },
       );
     const body = await req.json();
     let isUsernameChange = false;
@@ -62,16 +59,16 @@ export async function PUT(req: Request) {
     });
 
     return NextResponse.json(
-      { status: "success", user: updatedUser, isUsernameChange },
-      { status: 200 }
+      { status: 'success', user: updatedUser, isUsernameChange },
+      { status: 200 },
     );
   } catch (error) {
     return NextResponse.json(
       {
-        message: "Something went wrong",
+        message: 'Something went wrong',
         error,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

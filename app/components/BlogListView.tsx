@@ -1,12 +1,12 @@
-"use client";
-import { Post } from "@prisma/client";
-import React, { useEffect, useState } from "react";
-import Pagination from "./ui/Pagination";
-import { BlogListViewSkelton } from "./ui/skeleton/Home";
-import Link from "next/link";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Post } from '@prisma/client';
+import Link from 'next/link';
+import Pagination from './ui/Pagination';
+import { BlogListViewSkelton } from './ui/skeleton/Home';
 
 const BlogListView = () => {
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [posts, setPosts] = useState<Post[]>([]);
   const [totalPage, setTotalPage] = useState<number>();
@@ -24,11 +24,11 @@ const BlogListView = () => {
       const queryString = new URLSearchParams({
         page: query.page.toString(),
         limit: query.limit.toString(),
-        status: "published",
+        status: 'published',
       }).toString();
 
       const response = await fetch(`/api/post?${queryString}`, {
-        method: "GET",
+        method: 'GET',
         headers,
       });
       const data = await response.json();
@@ -40,6 +40,7 @@ const BlogListView = () => {
       setPosts(postsWithDate);
       setTotalPage(data.totalPage);
     } catch (error) {
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -64,9 +65,9 @@ const BlogListView = () => {
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const days = Math.floor(hours / 24);
     if (days > 0) {
-      return `${days} day${days > 1 ? "s" : ""} ago`;
+      return `${days} day${days > 1 ? 's' : ''} ago`;
     } else {
-      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
     }
   };
 
@@ -80,43 +81,35 @@ const BlogListView = () => {
             <Link key={item.id} href={`/blog/${item.id}`}>
               <div
                 className={`card ${
-                  index !== 0 ? "md:card-side" : ""
-                }  bg-base-100 shadow-xl border border-base-200 hover:bg-base-200 p-2 cursor-pointer`}
+                  index !== 0 ? 'md:card-side' : ''
+                }  cursor-pointer border border-base-200 bg-base-100 p-2 shadow-xl hover:bg-base-200`}
               >
                 <figure>
                   {item.image && (
                     <img
                       src={item.image}
                       alt="Cover"
-                      className={`mask object-cover object-center w-full rounded-xl ${
-                        index == 0
-                          ? "md:w-full h-60 xl:h-80"
-                          : "md:w-40 h-28 md:h-20 "
+                      className={`mask w-full rounded-xl object-cover object-center ${
+                        index == 0 ? 'h-60 md:w-full xl:h-80' : 'h-28 md:h-20 md:w-40 '
                       }`}
                     />
                   )}
                 </figure>
                 <div className="card-body">
-                  <h2 className="text-lg lg:text-xl font-semibold tracking-wide">
-                    {item.title}
-                  </h2>
+                  <h2 className="text-lg font-semibold tracking-wide lg:text-xl">{item.title}</h2>
                   <div className="badge badge-md">
-                    {item.updatedAt.toLocaleDateString("en-US", {
-                      month: "long",
-                      day: "numeric",
-                    })}{" "}
+                    {item.updatedAt.toLocaleDateString('en-US', {
+                      month: 'long',
+                      day: 'numeric',
+                    })}{' '}
                     ({calculateTimeDifference(item.updatedAt)})
                   </div>
                 </div>
               </div>
             </Link>
           ))}
-          <div className="flex justify-center p-2 m-1">
-            <Pagination
-              currentPage={query.page}
-              onChange={pageOnChange}
-              totalPage={totalPage}
-            />
+          <div className="m-1 flex justify-center p-2">
+            <Pagination currentPage={query.page} onChange={pageOnChange} totalPage={totalPage} />
           </div>
         </>
       )}

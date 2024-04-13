@@ -1,16 +1,16 @@
-import { db } from "@/lib/db";
-import { NextResponse } from "next/server";
-import { Prisma } from "@prisma/client";
+import { NextResponse } from 'next/server';
+import { Prisma } from '@prisma/client';
+import { db } from '@/lib/db';
 
 export async function POST(req: Request) {
   try {
-    const token = req.headers.get("Authorization");
+    const token = req.headers.get('Authorization');
     if (!token)
       return NextResponse.json(
         {
-          message: "Invalid User",
+          message: 'Invalid User',
         },
-        { status: 403 }
+        { status: 403 },
       );
 
     const body = await req.json();
@@ -23,40 +23,40 @@ export async function POST(req: Request) {
     });
     ////
 
-    return NextResponse.json({ status: "success", post }, { status: 200 });
+    return NextResponse.json({ status: 'success', post }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       {
-        message: "Something went wrong",
+        message: 'Something went wrong',
         error,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function PUT(req: Request) {
   try {
-    const token = req.headers.get("Authorization");
+    const token = req.headers.get('Authorization');
     if (!token)
       return NextResponse.json(
         {
-          message: "Invalid User",
+          message: 'Invalid User',
         },
-        { status: 403 }
+        { status: 403 },
       );
     const user = await db.user.findUnique({ where: { username: token } });
     if (!user)
       return NextResponse.json(
         {
-          message: "No user found with that token",
+          message: 'No user found with that token',
         },
-        { status: 404 }
+        { status: 404 },
       );
     const body = await req.json();
     const id = Number(body.id);
     const updatedPost = await db.post.update({
-      where: { id: id },
+      where: { id },
       data: {
         title: body.title,
         content: body.content,
@@ -65,43 +65,40 @@ export async function PUT(req: Request) {
       },
     });
 
-    return NextResponse.json(
-      { status: "success", post: updatedPost },
-      { status: 200 }
-    );
+    return NextResponse.json({ status: 'success', post: updatedPost }, { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(
       {
-        message: "Something went wrong",
+        message: 'Something went wrong',
         error,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
-    const page = Number(url.searchParams.get("page"));
-    const limit = Number(url.searchParams.get("limit"));
-    const status = url.searchParams.get("status");
-    const keyword = url.searchParams.get("keyword");
+    const page = Number(url.searchParams.get('page'));
+    const limit = Number(url.searchParams.get('limit'));
+    const status = url.searchParams.get('status');
+    const keyword = url.searchParams.get('keyword');
 
     let query: Prisma.PostFindManyArgs = {
       skip: (page - 1) * limit,
       take: limit,
     };
 
-    if (status && status != "")
+    if (status && status != '')
       query = {
         ...query,
         where: {
-          status: status,
+          status,
         },
       };
 
-    if (keyword && keyword != "")
+    if (keyword && keyword != '')
       query = {
         skip: query.skip,
         take: query.take,
@@ -116,22 +113,19 @@ export async function GET(req: Request) {
     const posts = await db.post.findMany({
       ...query,
       orderBy: {
-        createdAt: "desc",
+        createdAt: 'desc',
       },
     });
 
     const totalCount = await db.post.count();
-    return NextResponse.json(
-      { status: "success", totalCount, posts },
-      { status: 200 }
-    );
+    return NextResponse.json({ status: 'success', totalCount, posts }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       {
-        message: "Error",
+        message: 'Error',
         error,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

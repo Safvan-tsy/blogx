@@ -1,11 +1,11 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import LoginCard from "@/app/components/ui/card/Login";
-import RegisterCard from "@/app/components/ui/card/Register";
-import LoadingPage from "@/app/components/ui/LoadingPage";
-import { fetchUserData, redirectToDashboard } from "@/lib/actions/login";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import LoginCard from '@/app/components/ui/card/Login';
+import RegisterCard from '@/app/components/ui/card/Register';
+import LoadingPage from '@/app/components/ui/LoadingPage';
+import { fetchUserData, redirectToDashboard } from '@/lib/actions/login';
 
 const Login = () => {
   const { data: session } = useSession();
@@ -19,7 +19,7 @@ const Login = () => {
         const userData = await fetchUserData();
         setIsUser(userData);
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error('Error fetching user data:', error);
       } finally {
         setLoading(false);
       }
@@ -36,11 +36,7 @@ const Login = () => {
     return <LoadingPage />;
   }
 
-  return (
-    <div className="min-h-screen">
-      {isUser ? <LoginCard /> : <RegisterCard />}
-    </div>
-  );
+  return <div className="min-h-screen">{isUser ? <LoginCard /> : <RegisterCard />}</div>;
 };
 
 export default Login;

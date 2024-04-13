@@ -42,10 +42,10 @@
   .editor pre {
     @apply bg-base-100 p-2 shadow-md;
   }
-  .editor code{
+  .editor code {
     @apply flex flex-wrap overflow-x-auto;
   }
-  .editor p{
-    @apply md:text-lg xl:text-xl
+  .editor p {
+    @apply md:text-lg xl:text-xl;
   }
 }

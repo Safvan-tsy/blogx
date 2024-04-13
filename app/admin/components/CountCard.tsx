@@ -1,25 +1,26 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { CounterCardSkelton } from "../../components/ui/skeleton/Dashboard";
-import { useSession } from "next-auth/react";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { CounterCardSkelton } from '@/app/components/ui/skeleton/Dashboard';
 
 const CountCard: React.FC = () => {
   const { data: userData } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string>('');
   const [blogCount, setBlogCount] = useState<number>();
 
   const fetchData = async () => {
     try {
       const headers = new Headers();
-      headers.append("Authorization", userData?.user.username || "");
+      headers.append('Authorization', userData?.user.username || '');
       const response = await fetch(`/api/admin/post`, {
-        method: "GET",
+        method: 'GET',
         headers,
       });
       const data = await response.json();
       setBlogCount(data.totalCount);
     } catch (error) {
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -29,7 +30,7 @@ const CountCard: React.FC = () => {
   }, [userData?.user]);
 
   return (
-    <div className="flex justify-between md:justify-center lg:justify-start gap-3 lg:gap-5">
+    <div className="flex justify-between gap-3 md:justify-center lg:justify-start lg:gap-5">
       {isLoading ? (
         <CounterCardSkelton />
       ) : (

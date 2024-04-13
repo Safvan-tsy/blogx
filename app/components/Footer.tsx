@@ -1,14 +1,14 @@
-import Link from "next/link";
-import React from "react";
+import Link from 'next/link';
+import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
+    <footer className="footer footer-center rounded bg-base-200 p-10 text-base-content">
       <nav className="grid grid-flow-col gap-4">
-        <Link href="" className="link link-hover">
+        <Link href="" className="link-hover link">
           About Me
         </Link>
-        <Link href="" className="link link-hover">
+        <Link href="" className="link-hover link">
           Contact
         </Link>
       </nav>

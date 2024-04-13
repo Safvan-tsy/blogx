@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Pagination: React.FC<{
   currentPage: number;
@@ -17,15 +17,15 @@ const Pagination: React.FC<{
   return (
     <div className="join">
       <button
-        className="join-item btn"
+        className="btn join-item"
         disabled={currentPage == 1 ? true : false}
         onClick={changePageMinus}
       >
         «
       </button>
-      <button className="join-item btn">{currentPage}</button>
+      <button className="btn join-item">{currentPage}</button>
       <button
-        className="join-item btn"
+        className="btn join-item"
         onClick={changePagePlus}
         disabled={totalPage && totalPage == currentPage ? true : false}
       >

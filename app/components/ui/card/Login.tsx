@@ -1,33 +1,30 @@
-"use client";
-import React, { useState } from "react";
-import { FormEvent } from "react";
-import * as z from "zod";
-import Loader from "../Loader";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+'use client';
+import React, { useState } from 'react';
+import { FormEvent } from 'react';
+import * as z from 'zod';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import Loader from '../Loader';
 
 const LoginCard = () => {
   const router = useRouter();
   const [validationErrors, setValidationErrors] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const userSchema = z.object({
-    username: z
-      .string()
-      .min(1, "Username is required")
-      .max(20, "maximum 20 characters only"),
+    username: z.string().min(1, 'Username is required').max(20, 'maximum 20 characters only'),
     password: z
       .string()
-      .min(1, "Password is required")
-      .min(6, "Password must have than 6 characters"),
+      .min(1, 'Password is required')
+      .min(6, 'Password must have than 6 characters'),
   });
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
+    setError('');
     const formData = {
       username: e.currentTarget.username.value,
       password: e.currentTarget.password.value,
@@ -36,8 +33,8 @@ const LoginCard = () => {
     try {
       const validated = userSchema.parse(formData);
       setValidationErrors({
-        username: "",
-        password: "",
+        username: '',
+        password: '',
       });
     } catch (error: any) {
       const validationErrorMessages: Record<string, string> = {};
@@ -45,29 +42,29 @@ const LoginCard = () => {
         validationErrorMessages[err.path[0]] = err.message;
       });
       setValidationErrors({
-        username: validationErrorMessages["username"] || "",
-        password: validationErrorMessages["password"] || "",
+        username: validationErrorMessages['username'] || '',
+        password: validationErrorMessages['password'] || '',
       });
       return;
     }
 
     try {
       setIsLoading(true);
-      const signInData = await signIn("credentials", {
+      const signInData = await signIn('credentials', {
         username: e.currentTarget.username.value,
         password: e.currentTarget.password.value,
         redirect: false,
       });
       if (signInData?.error) {
-        setError("Incorrect username or password");
+        setError('Incorrect username or password');
         setIsLoading(false);
       } else {
         router.refresh();
-        router.push("/admin/dashboard");
+        router.push('/admin/dashboard');
       }
       setIsLoading(false);
     } catch (error: any) {
-      setError("something went wrong");
+      setError('something went wrong');
       setIsLoading(false);
     }
   };
@@ -75,46 +72,36 @@ const LoginCard = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
-          <div
-            className="w-full  rounded-lg md:mt-0 sm:max-w-md xl:p-0"
-          >
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 lg:py-0">
+          <div className="w-full  rounded-lg sm:max-w-md md:mt-0 xl:p-0">
+            <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
               <p className="text-xl font-bold leading-tight tracking-tight  md:text-2xl ">
                 Login to your account
               </p>
               <div>
-                <label className="block mb-2 text-sm font-medium ">
-                  Your username
-                </label>
+                <label className="mb-2 block text-sm font-medium ">Your username</label>
                 <input
                   placeholder="JohnDoe"
-                  className=" border sm:text-sm rounded-lg block w-full p-2.5"
+                  className=" block w-full rounded-lg border p-2.5 sm:text-sm"
                   name="username"
                   id="username"
                   type="text"
                 />
-                {validationErrors.username != "" && (
-                  <p className="text-sm text-red-600">
-                    {validationErrors.username}
-                  </p>
+                {validationErrors.username != '' && (
+                  <p className="text-sm text-red-600">{validationErrors.username}</p>
                 )}
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium ">
-                  Password
-                </label>
+                <label className="mb-2 block text-sm font-medium ">Password</label>
                 <input
-                  className=" border sm:text-sm rounded-lg block w-full p-2.5"
+                  className=" block w-full rounded-lg border p-2.5 sm:text-sm"
                   placeholder="••••••••"
                   name="password"
                   id="password"
                   type="password"
                 />
-                {validationErrors.password != "" && (
-                  <p className="text-sm text-red-600">
-                    {validationErrors.password}
-                  </p>
+                {validationErrors.password != '' && (
+                  <p className="text-sm text-red-600">{validationErrors.password}</p>
                 )}
               </div>
               {/* <div className="flex items-start">
@@ -135,16 +122,14 @@ const LoginCard = () => {
                   <Loader />
                 ) : (
                   <button
-                    className="w-full bg-base-200 hover:bg-base-300 focus:ring-4 focus:outline-none focus:ring-base-300
-                    font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-base-600 "
+                    className="focus:ring-base-600 w-full rounded-lg bg-base-200 px-5 py-2.5
+                    text-center text-sm font-medium hover:bg-base-300 focus:outline-none focus:ring-4 focus:ring-base-300 "
                     type="submit"
                   >
                     Login
                   </button>
                 )}
-                {error && (
-                  <p className="text-sm text-red-500 text-center">{error}</p>
-                )}
+                {error && <p className="text-center text-sm text-red-500">{error}</p>}
               </div>
             </div>
           </div>

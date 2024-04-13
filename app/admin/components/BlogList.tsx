@@ -1,19 +1,19 @@
-"use client";
-import React, { FormEvent, useEffect, useState } from "react";
-import { FaEdit, FaPlus, FaSearch, FaTrashAlt } from "react-icons/fa";
-import Link from "next/link";
-import Select from "../../components/ui/Select";
-import { useSession } from "next-auth/react";
-import Pagination from "../../components/ui/Pagination";
-import { Post } from "@prisma/client";
-import AlertModal from "../../components/ui/modal/AlertModal";
-import { BlogListSkeleton } from "../../components/ui/skeleton/Dashboard";
+'use client';
+import React, { FormEvent, useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { FaEdit, FaPlus, FaSearch } from 'react-icons/fa';
+import { Post } from '@prisma/client';
+import Link from 'next/link';
+import Select from '@/app/components/ui/Select';
+import Pagination from '@/app/components/ui/Pagination';
+import AlertModal from '@/app/components/ui/modal/AlertModal';
+import { BlogListSkeleton } from '@/app/components/ui/skeleton/Dashboard';
 
 const BlogList: React.FC = () => {
   const { data: userData } = useSession();
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [posts, setPosts] = useState<Array<any>>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [query, setQuery] = useState<{
     page: number;
     limit: number;
@@ -25,28 +25,29 @@ const BlogList: React.FC = () => {
   });
 
   const selectProps = {
-    title: "status",
-    options: ["Draft", "Published", "All"],
+    title: 'status',
+    options: ['Draft', 'Published', 'All'],
   };
 
   const fetchData = async () => {
     try {
       const headers = new Headers();
-      headers.append("Authorization", userData?.user.username || "");
+      headers.append('Authorization', userData?.user.username || '');
       const queryString = new URLSearchParams({
         page: query.page.toString(),
         limit: query.limit.toString(),
-        status: query.status || "",
-        keyword: query.keyword || "",
+        status: query.status || '',
+        keyword: query.keyword || '',
       }).toString();
 
       const response = await fetch(`/api/admin/post?${queryString}`, {
-        method: "GET",
+        method: 'GET',
         headers,
       });
       const data = await response.json();
       setPosts(data.posts);
     } catch (error) {
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -60,10 +61,10 @@ const BlogList: React.FC = () => {
   const deleteData = async (id: number) => {
     try {
       const headers = new Headers();
-      headers.append("Authorization", userData?.user.username || "");
+      headers.append('Authorization', userData?.user.username || '');
 
       const response = await fetch(`/api/admin/post/${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers,
       });
       if (response.ok) {
@@ -71,7 +72,7 @@ const BlogList: React.FC = () => {
       }
     } catch (error) {
       setIsLoading(false);
-      setError("Something went wrong");
+      setError('Something went wrong');
     }
   };
 
@@ -81,7 +82,7 @@ const BlogList: React.FC = () => {
   };
   const selectOnChange = async (value: string) => {
     setIsLoading(true);
-    if (value == "All") value = "";
+    if (value == 'All') value = '';
     setQuery((prevQuery) => ({
       ...prevQuery,
       status: value.toLowerCase(),
@@ -115,12 +116,12 @@ const BlogList: React.FC = () => {
   return (
     <div className="flex flex-col gap-2">
       <div
-        className="flex flex-col md:flex-row flex-wrap items-stretch md:items-center 
-      justify-center md:justify-between gap-3"
+        className="flex flex-col flex-wrap items-stretch justify-center gap-3 
+      md:flex-row md:items-center md:justify-between"
       >
         <div>
           <form className="flex" onSubmit={searchOnSubmit}>
-            <div className="input input-bordered flex items-center justify-between w-full">
+            <div className="input input-bordered flex w-full items-center justify-between">
               <input
                 type="text"
                 placeholder="Search"
@@ -129,17 +130,13 @@ const BlogList: React.FC = () => {
                 className=" md:w-auto lg:w-[20rem] xl:w-[25rem]"
               />
               <button type="submit" className="">
-                <FaSearch className="w-5 h-5 lg:w-6 lg:h-6" />
+                <FaSearch className="h-5 w-5 lg:h-6 lg:w-6" />
               </button>
             </div>
           </form>
         </div>
-        <div className="grid grid-rows-1 grid-cols-2 items-center gap-2">
-          <Select
-            selected="All"
-            options={selectProps.options}
-            onChange={selectOnChange}
-          />
+        <div className="grid grid-cols-2 grid-rows-1 items-center gap-2">
+          <Select selected="All" options={selectProps.options} onChange={selectOnChange} />
           <Link href="/admin/dashboard/new">
             <button className="btn w-full">
               <FaPlus /> New
@@ -150,7 +147,7 @@ const BlogList: React.FC = () => {
       {isLoading ? (
         <BlogListSkeleton numberOfRows={5} />
       ) : (
-        <div className="overflow-x-auto mt-3">
+        <div className="mt-3 overflow-x-auto">
           <table className="table">
             <thead>
               <tr>
@@ -183,13 +180,9 @@ const BlogList: React.FC = () => {
                   </td>
                   <td>
                     <div className="avatar">
-                      <div className="w-36 h-16">
+                      <div className="h-16 w-36">
                         {item.image && (
-                          <img
-                            src={item.image}
-                            alt="Cover"
-                            className="max-w-36 max-h-16"
-                          />
+                          <img src={item.image} alt="Cover" className="max-h-16 max-w-36" />
                         )}
                       </div>
                     </div>
@@ -199,7 +192,7 @@ const BlogList: React.FC = () => {
                 </span> */}
                   </td>
                   <td>
-                    {item.status == "draft" ? (
+                    {item.status == 'draft' ? (
                       <div className="btn btn-sm text-warning">Draft</div>
                     ) : (
                       <div className="btn btn-sm text-success">Published</div>
@@ -207,14 +200,8 @@ const BlogList: React.FC = () => {
                   </td>
                   <th>
                     <div className="flex flex-row flex-wrap items-center justify-between gap-2">
-                      <div
-                        className="tooltip tooltip-bottom"
-                        data-tip="Edit Post"
-                      >
-                        <Link
-                          href={`/admin/dashboard/blogs/${item.id}`}
-                          className="btn btn-sm"
-                        >
+                      <div className="tooltip tooltip-bottom" data-tip="Edit Post">
+                        <Link href={`/admin/dashboard/blogs/${item.id}`} className="btn btn-sm">
                           <FaEdit />
                         </Link>
                       </div>
@@ -241,7 +228,7 @@ const BlogList: React.FC = () => {
               </tr>
             </tfoot>
           </table>
-          <div className="flex justify-center p-2 m-1">
+          <div className="m-1 flex justify-center p-2">
             <Pagination currentPage={query.page} onChange={pageOnChange} />
           </div>
         </div>
