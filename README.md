@@ -9,9 +9,9 @@ The Blogx Website has been built with the following tech stack:
 -   [Postgresql](https://www.postgresql.org/)
 
 
-## Development
+# Development
 
-# Setup Procedure
+## Setup Procedure
 
 - Docker
 
@@ -22,7 +22,7 @@ The Blogx Website has been built with the following tech stack:
 - Replace the DATABASE_URL in .env
 - Run `npx prisma migrate dev` to setup schema
 
-# Steps to run locally
+## Steps to run locally
 
 With Docker
 
