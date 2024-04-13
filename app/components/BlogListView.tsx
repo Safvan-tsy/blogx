@@ -84,14 +84,17 @@ const BlogListView = () => {
                 }  bg-base-100 shadow-xl border border-base-200 hover:bg-base-200 p-2 cursor-pointer`}
               >
                 <figure>
-                  <img
-                    src={item.image ? item.image : ""}
-                    alt="Cover"
-                    className={`mask object-cover object-center w-full rounded-xl
-              ${
-                index == 0 ? "md:w-full h-60 xl:h-80" : "md:w-40 h-28 md:h-20 "
-              }`}
-                  />
+                  {item.image && (
+                    <img
+                      src={item.image}
+                      alt="Cover"
+                      className={`mask object-cover object-center w-full rounded-xl ${
+                        index == 0
+                          ? "md:w-full h-60 xl:h-80"
+                          : "md:w-40 h-28 md:h-20 "
+                      }`}
+                    />
+                  )}
                 </figure>
                 <div className="card-body">
                   <h2 className="text-lg lg:text-xl font-semibold tracking-wide">
