@@ -108,9 +108,11 @@ const BlogListView = () => {
               </div>
             </Link>
           ))}
-          <div className="m-1 flex justify-center p-2">
-            <Pagination currentPage={query.page} onChange={pageOnChange} totalPage={totalPage} />
-          </div>
+          {posts.length > 0 && (
+            <div className="m-1 flex justify-center p-2">
+              <Pagination currentPage={query.page} onChange={pageOnChange} totalPage={totalPage} />
+            </div>
+          )}
         </>
       )}
     </div>
