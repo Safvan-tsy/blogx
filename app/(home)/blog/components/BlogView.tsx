@@ -1,7 +1,7 @@
 'use client';
 import { Post } from '@prisma/client';
 import React, { useEffect, useState } from 'react';
-import { BlogViewSkelton } from '../../components/ui/skeleton/Home';
+import { BlogViewSkelton } from '@/app/components/ui/skeleton/Home';
 
 export const BlogView: React.FC<{ id: number }> = ({ id }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);

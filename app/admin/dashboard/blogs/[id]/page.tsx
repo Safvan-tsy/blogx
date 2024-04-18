@@ -1,7 +1,7 @@
 import React from 'react';
 import Editor from '@/app/components/editor/Editor';
 
-const page: React.FC<{ params: any }> = ({ params }) => {
+const page: React.FC<{ params: { id: string } }> = ({ params }) => {
   return (
     <>
       <div className="m-2 rounded-md bg-base-200 p-2 sm:m-3 md:m-4 lg:m-5 xl:m-6">
@@ -11,7 +11,7 @@ const page: React.FC<{ params: any }> = ({ params }) => {
         >
           Edit post
         </h3>
-        <Editor id={params.id} />
+        <Editor id={Number(params.id)} />
       </div>
     </>
   );
