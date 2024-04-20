@@ -1,13 +1,16 @@
+'use client';
 import React from 'react';
-import HomeProfileCard from '@/app/components/ui/card/HomeProfileCard';
+import { usePostFetch } from '@/lib/hooks/usePostFetch';
 import { BlogView } from '../components/BlogView';
 
-const page: React.FC<{ params: { id: string } }> = ({ params }) => {
+const Blog: React.FC<{ params: { id: string } }> = ({ params }) => {
+  const { isLoading, post, error } = usePostFetch(Number(params.id));
+
   return (
     <div className="xl:w-[50rem]">
-      <BlogView id={Number(params.id)} />
+      <BlogView isLoading={isLoading} post={post} error={error} />
     </div>
   );
 };
 
-export default page;
+export default Blog;
