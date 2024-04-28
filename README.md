@@ -34,6 +34,7 @@ Without Docker
 - `npm run db:seed` to seed the database
 - `npm run dev`
 
----
+--- Go to http://localhost:3000/login for signup and signin
+--- http://localhost:3000/admin/dashboard to access the dashboard
 
 Read [contributing guidelines](./CONTRIBUTING.md) to start making contributions

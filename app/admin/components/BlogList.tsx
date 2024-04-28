@@ -170,7 +170,17 @@ const BlogList: React.FC = () => {
           </form>
         </div>
         <div className="grid grid-cols-2 grid-rows-1 items-center gap-2">
-          <Select selected="All" options={selectProps.options} onChange={selectOnChange} />
+          <Select
+            selected={
+              query.status === 'published'
+                ? 'Published'
+                : query.status === 'draft'
+                  ? 'Draft'
+                  : 'All'
+            }
+            options={selectProps.options}
+            onChange={selectOnChange}
+          />
           <Link href="/admin/dashboard/new">
             <button className="btn w-full">
               <FaPlus /> New
