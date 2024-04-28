@@ -13,6 +13,8 @@ const BlogList: React.FC = () => {
   const { data: userData } = useSession();
   const [error, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [totalPage, setTotalPage] = useState<number>();
+  const [selectedPosts, setSelectedPosts] = useState<number[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
   const [query, setQuery] = useState<{
     page: number;
@@ -46,6 +48,7 @@ const BlogList: React.FC = () => {
       });
       const data = await response.json();
       setPosts(data.posts);
+      setTotalPage(data.totalPage);
     } catch (error) {
       console.log(error);
     } finally {
@@ -76,9 +79,32 @@ const BlogList: React.FC = () => {
     }
   };
 
+  const bulkDeleteData = async (ids: number[]) => {
+    try {
+      const headers = new Headers();
+      headers.append('Authorization', userData?.user.username || '');
+
+      const response = await fetch(`/api/admin/post/`, {
+        method: 'DELETE',
+        headers,
+        body: JSON.stringify({ ids }),
+      });
+      if (response.ok) {
+        fetchData();
+      }
+    } catch (error) {
+      setIsLoading(false);
+      setError('Something went wrong');
+    }
+  };
+
   const onDelete = async (id: number) => {
     setIsLoading(true);
     deleteData(id);
+  };
+  const onBulkDelete = async (ids: number[]) => {
+    setIsLoading(true);
+    bulkDeleteData(ids);
   };
   const selectOnChange = async (value: string) => {
     setIsLoading(true);
@@ -105,6 +131,14 @@ const BlogList: React.FC = () => {
       ...prevQuery,
       keyword,
     }));
+  };
+
+  const togglePostSelection = (postId: number) => {
+    if (selectedPosts.includes(postId)) {
+      setSelectedPosts(selectedPosts.filter((id) => id !== postId));
+    } else {
+      setSelectedPosts([...selectedPosts, postId]);
+    }
   };
 
   useEffect(() => {
@@ -153,13 +187,38 @@ const BlogList: React.FC = () => {
               <tr>
                 <th>
                   <label>
-                    <input type="checkbox" className="checkbox" />
+                    <input
+                      type="checkbox"
+                      className="checkbox"
+                      onChange={(e) => {
+                        if (e.target.checked == true) {
+                          setSelectedPosts(
+                            posts.map((item) => {
+                              return item.id;
+                            }),
+                          );
+                        } else {
+                          setSelectedPosts([]);
+                        }
+                      }}
+                    />
                   </label>
                 </th>
                 <th>Title</th>
                 <th>Cover</th>
                 <th>Status</th>
-                <th></th>
+                <th>
+                  {selectedPosts.length > 0 && (
+                    <div className="tooltip tooltip-bottom" data-tip="Delete">
+                      <AlertModal
+                        text="Are you sure to delete"
+                        onYes={() => {
+                          onBulkDelete(selectedPosts);
+                        }}
+                      />
+                    </div>
+                  )}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -167,7 +226,12 @@ const BlogList: React.FC = () => {
                 <tr key={item.id}>
                   <th>
                     <label>
-                      <input type="checkbox" className="checkbox" />
+                      <input
+                        type="checkbox"
+                        className="checkbox"
+                        checked={selectedPosts.includes(item.id)}
+                        onChange={() => togglePostSelection(item.id)}
+                      />
                     </label>
                   </th>
                   <td>
@@ -229,7 +293,7 @@ const BlogList: React.FC = () => {
             </tfoot>
           </table>
           <div className="m-1 flex justify-center p-2">
-            <Pagination currentPage={query.page} onChange={pageOnChange} />
+            <Pagination currentPage={query.page} onChange={pageOnChange} totalPage={totalPage} />
           </div>
         </div>
       )}

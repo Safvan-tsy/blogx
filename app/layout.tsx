@@ -12,7 +12,10 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: 'BlogX | open source | personal blog',
+  title: {
+    default: 'BlogX | open source | personal blog',
+    template: '%s | Bogx',
+  },
   description: 'BlogeX is an open source blogging template built with nextjs 13',
   metadataBase: new URL('https://blogs-flame.vercel.app/'),
   openGraph: {
@@ -22,7 +25,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <html lang="en">
       <body className={`font-sans ${roboto.variable} min-h-screen flex-col`}>
@@ -34,4 +37,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </body>
     </html>
   );
-}
+};
+export default RootLayout;

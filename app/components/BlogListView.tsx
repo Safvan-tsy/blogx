@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { Post } from '@prisma/client';
 import Link from 'next/link';
+import { calculateTimeDifference } from '@/lib/actions/utils';
 import Pagination from './ui/Pagination';
 import { BlogListViewSkelton } from './ui/skeleton/Home';
 
 const BlogListView = () => {
-  const [error, setError] = useState<string>('');
+  // const [error, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [posts, setPosts] = useState<Post[]>([]);
   const [totalPage, setTotalPage] = useState<number>();
@@ -56,19 +57,6 @@ const BlogListView = () => {
       ...prevQuery,
       page,
     }));
-  };
-
-  // Function to calculate the time difference between two dates
-  const calculateTimeDifference = (date: Date) => {
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const days = Math.floor(hours / 24);
-    if (days > 0) {
-      return `${days} day${days > 1 ? 's' : ''} ago`;
-    } else {
-      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-    }
   };
 
   return (

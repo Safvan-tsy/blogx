@@ -8,6 +8,7 @@ import Pagination from '@/app/components/ui/Pagination';
 import { BlogListViewSkelton } from '@/app/components/ui/skeleton/Home';
 import { NAV_URL } from '@/lib/utils/constants';
 import NotFoundImage from '@/public/not-found.jpg';
+import { calculateTimeDifference } from '@/lib/actions/utils';
 
 const BlogSearchView: React.FC<{
   params: { [key: string]: string | undefined };
@@ -72,19 +73,6 @@ const BlogSearchView: React.FC<{
 
   const pageOnChange = async (page: number) => {
     router.push(`${NAV_URL.SEARCH}?page=${page}&limit=${query.limit}&keyword=${query.keyword}`);
-  };
-
-  // Function to calculate the time difference between two dates
-  const calculateTimeDifference = (date: Date) => {
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const days = Math.floor(hours / 24);
-    if (days > 0) {
-      return `${days} day${days > 1 ? 's' : ''} ago`;
-    } else {
-      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-    }
   };
 
   return (
