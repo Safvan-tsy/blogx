@@ -118,11 +118,47 @@ export async function GET(req: Request) {
     });
 
     const totalCount = await db.post.count();
-    return NextResponse.json({ status: 'success', totalCount, posts }, { status: 200 });
+    const totalPage = Math.ceil(totalCount / limit);
+    return NextResponse.json({ status: 'success', totalPage, totalCount, posts }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       {
         message: 'Error',
+        error,
+      },
+      { status: 500 },
+    );
+  }
+}
+export async function DELETE(req: Request) {
+  try {
+    const token = req.headers.get('Authorization');
+    if (!token)
+      return NextResponse.json(
+        {
+          message: 'Invalid User',
+        },
+        { status: 403 },
+      );
+    const user = await db.user.findUnique({ where: { username: token } });
+    if (!user)
+      return NextResponse.json(
+        {
+          message: 'No user found with that token',
+        },
+        { status: 404 },
+      );
+    const body = await req.json();
+    const ids = body.ids;
+    await db.post.deleteMany({
+      where: { id: { in: ids } },
+    });
+
+    return NextResponse.json({ status: 'success' }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: 'Something went wrong',
         error,
       },
       { status: 500 },
