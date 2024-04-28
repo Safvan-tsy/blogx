@@ -56,6 +56,9 @@ Without Docker
 - `npm run db:seed` to seed the database
 - `npm run dev`
 
+--- Go to http://localhost:3000/login for signup and signin
+--- http://localhost:3000/admin/dashboard to access the dashboard
+
 Before commiting your code changes, make sure the website repo builds by running:
 
 ```sh
