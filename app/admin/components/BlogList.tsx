@@ -91,6 +91,7 @@ const BlogList: React.FC = () => {
       });
       if (response.ok) {
         fetchData();
+        setSelectedPosts([]);
       }
     } catch (error) {
       setIsLoading(false);
