@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Post } from '@prisma/client';
 import Link from 'next/link';
 import { calculateTimeDifference } from '@/lib/actions/utils';
@@ -19,7 +19,7 @@ const BlogListView = () => {
     limit: 5,
   });
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const headers = new Headers();
       const queryString = new URLSearchParams({
@@ -45,11 +45,11 @@ const BlogListView = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [query]);
 
   useEffect(() => {
     fetchData();
-  }, [query]);
+  }, [fetchData]);
 
   const pageOnChange = async (page: number) => {
     setIsLoading(true);
