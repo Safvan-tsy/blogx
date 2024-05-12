@@ -8,9 +8,10 @@ export default function ThemeSwitch() {
 
   useEffect(() => {
     localStorage.setItem('theme', theme as string);
-
     const local = localStorage.getItem('theme');
-    if (local) document.querySelector('html')?.setAttribute('data-theme', local);
+    if (local) {
+      document.querySelector('html')?.setAttribute('data-theme', local);
+    }
   }, [theme]);
 
   const handelToggle: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -24,10 +25,10 @@ export default function ThemeSwitch() {
   return (
     <label className="swap swap-rotate h-fit w-fit">
       {/* this hidden checkbox controls the state */}
-      <input type="checkbox" onChange={handelToggle} />
+      <input type="checkbox" onChange={handelToggle} checked={theme === 'retro' ? false : true} />
       {/* sun */}
       <svg
-        className="swap-off h-8 w-8 fill-current"
+        className={`swap-off h-8 w-8 fill-current`}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
@@ -35,7 +36,7 @@ export default function ThemeSwitch() {
       </svg>
       {/* moon */}
       <svg
-        className="swap-on h-8 w-8 fill-current"
+        className={`swap-on h-8 w-8 fill-current`}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
