@@ -1,5 +1,5 @@
 'use client';
-import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
+import { ChangeEventHandler, useEffect, useState } from 'react';
 
 export default function ThemeSwitch() {
   const [theme, setTheme] = useState(
