@@ -41,7 +41,7 @@ const BlogListView = () => {
       setPosts(postsWithDate);
       setTotalPage(data.totalPage);
     } catch (error) {
-      console.log(error);
+      throw new Error(`Something went wrong`);
     } finally {
       setIsLoading(false);
     }
