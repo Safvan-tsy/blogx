@@ -5,6 +5,13 @@ export async function GET(req: Request) {
   try {
     const id = req.url.split('post/')[1];
     const post = await db.post.findUnique({ where: { id: Number(id) } });
+    if (!post)
+      return NextResponse.json(
+        {
+          message: 'Post not found',
+        },
+        { status: 404 },
+      );
 
     return NextResponse.json({ status: 'success', post }, { status: 200 });
   } catch (error) {

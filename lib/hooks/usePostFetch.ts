@@ -15,14 +15,14 @@ export const usePostFetch = (id: number) => {
           headers,
         });
         if (response.ok) {
-          const data: { status: string; post: Post } = await response.json();
-          data.post.updatedAt = new Date(data.post.updatedAt);
-          setPost(data.post);
+          const { post } = await response.json();
+          post.updatedAt = new Date(post.updatedAt);
+          setPost(post);
         } else {
           setError('Something went wrong');
         }
       } catch (error: any) {
-        setError(error.message);
+        setError(error.message || 'shit');
       } finally {
         setIsLoading(false);
       }

@@ -7,7 +7,7 @@ export const BlogView: React.FC<{
   isLoading: boolean;
   post: Post | null;
   error?: string | null;
-}> = ({ isLoading, post }) => {
+}> = ({ isLoading, post, error }) => {
   return (
     <div className="flex max-w-full flex-col gap-3">
       {isLoading ? (
